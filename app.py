@@ -34,3 +34,15 @@ def upload_file():
     file_path = os.path.join(app.config['UPLOAD_FOLDER'], file.filename)
     file.save(file_path)
     return "Uploaded file successfully"
+
+@app.route('/show_files')
+def process_files():
+    # Show the files
+    files = os.listdir(app.config['UPLOAD_FOLDER'])
+    return f"Files in temporary folder: {files}"
+
+@app.route('/discard_files')
+def discard_session():
+    # Remove all files from temp folder, start new session
+    shutil.rmtree(app.config['UPLOAD_FOLDER'])
+    return "Session dropped, files removed from temporary folder"
