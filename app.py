@@ -13,7 +13,7 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 def is_allowed_file(filename) -> bool:
     _, ext = os.path.splitext(filename)
-    return ext in ALLOWED_EXTENSIONS
+    return ext.lower() in ALLOWED_EXTENSIONS
 
 
 @app.route("/")
@@ -48,6 +48,15 @@ def show_files():
 
 @app.route("/discard_files")
 def discard_session():
+    global UPLOAD_FOLDER
+
     # Remove all files from temp folder, start new session
     shutil.rmtree(app.config["UPLOAD_FOLDER"])
+    UPLOAD_FOLDER: str = tempfile.mkdtemp()
+    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
     return "Session dropped, files removed from temporary folder"
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
