@@ -52,7 +52,7 @@ def discard_session():
 
     # Remove all files from temp folder, start new session
     shutil.rmtree(app.config["UPLOAD_FOLDER"])
-    UPLOAD_FOLDER: str = tempfile.mkdtemp()
+    UPLOAD_FOLDER = tempfile.mkdtemp()
     app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
     return "Session dropped, files removed from temporary folder"
