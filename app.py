@@ -5,7 +5,7 @@ import os
 import shutil
 import tempfile
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder="static", template_folder="templates")
 
 UPLOAD_FOLDER: str = tempfile.mkdtemp()
 ALLOWED_EXTENSIONS: set = {".xlsx", ".csv"}
