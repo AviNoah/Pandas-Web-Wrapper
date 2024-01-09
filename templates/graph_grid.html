@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename = 'styles/node_grid.css') }}" />
   </head>
   <body>
     <div id="graph-container">
@@ -12,6 +12,6 @@
       <div class="node" style="left: 150px; top: 150px;"></div>
       <!-- Add more nodes as needed -->
     </div>
-    <script src="script.js"></script>
+    <script src="{{ url_for('static', filename = 'javascripts/draggableGraph.js') }}"></script>
   </body>
 </html>
