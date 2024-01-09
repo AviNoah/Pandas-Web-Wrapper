@@ -13,6 +13,9 @@ ALLOWED_EXTENSIONS: set = {".xlsx", ".csv"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 
+# Helper methods
+
+
 def alert_user_and_redirect():
     # Decorate a app.route decorated method with this to alert a user and redirect
     # once it finishes. place this under the app.route decorator
@@ -30,6 +33,9 @@ def alert_user_and_redirect():
 def is_allowed_file(filename) -> bool:
     _, ext = os.path.splitext(filename)
     return ext.lower() in ALLOWED_EXTENSIONS
+
+
+# App methods
 
 
 @app.route("/")
@@ -62,7 +68,10 @@ def upload_file() -> tuple[str, str]:
 def show_files():
     # Show the files
     files = os.listdir(app.config["UPLOAD_FOLDER"])
-    return f"Files in temporary folder: {files}"
+    file_data: list[dict] = [
+        {"name": file, "icon": "excel_logo_closed.webp"} for file in files
+    ]
+    return render_template("files.html", files=file_data)
 
 
 @app.route("/discard_files")
