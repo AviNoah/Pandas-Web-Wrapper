@@ -24,6 +24,10 @@ function displayFiles() {
             console.log(iconImg.src)
             iconImg.alt = 'Excel Icon';
 
+            // Shrink image
+            iconImg.width = 128;
+            iconImg.height = 128;
+
             // Create paragraph
             const fileName = document.createElement('p');
             fileName.textContent = file.name;
