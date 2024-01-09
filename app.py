@@ -1,4 +1,5 @@
-from flask import Flask, render_template, request, redirect, url_for, quote
+from flask import Flask, render_template, request, redirect, url_for
+from urllib.parse import quote
 import os
 import shutil
 import tempfile
