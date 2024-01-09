@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for
 from urllib.parse import quote
+from functools import wraps
 import os
 import shutil
 import tempfile
@@ -16,6 +17,7 @@ def alert_user_and_redirect():
     # Decorate a app.route decorated method with this to alert a user and redirect
     # once it finishes. place this under the app.route decorator
     def decorator(func):
+        @wraps
         def wrapper(*args, **kwargs):
             redir, msg = func(*args, **kwargs)  # Must return redirect and message
             return redirect(redir + "?notification=" + quote(msg))
