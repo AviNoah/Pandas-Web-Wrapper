@@ -6,7 +6,7 @@ function displayFiles() {
     // Get file list container
     const fileListContainer = document.getElementById('file-list');
 
-    if (typeof (fileData) === undefined)
+    if (typeof fileData === 'undefined')
         throw Error("filesData is not defined or was not passed to script correctly")
 
     if (fileListContainer) {
