@@ -12,7 +12,7 @@
 
     <!-- Define files_json in the global scope -->
     <script>
-      const fileData = JSON.parse(files_json)
+      const fileData = {{files_json | tojson | safe}}
     </script>
 
     <!-- Include the fileDisplay.js script -->

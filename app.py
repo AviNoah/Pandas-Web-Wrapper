@@ -75,9 +75,8 @@ def show_files():
     file_data: list[dict] = [
         {"name": file, "icon": "excel_logo_closed.webp"} for file in files
     ]
-    file_data_json = jsonify(file_data).json
 
-    return render_template("files.html", files_json=file_data_json)
+    return render_template("files.html", files_json=file_data)
 
 
 @app.route("/discard_files")
