@@ -32,6 +32,20 @@ function displayFiles() {
             const fileName = document.createElement('p');
             fileName.textContent = file.name;
 
+            // Add event listener for file selection, and add glow effect to selected
+            fileDiv.addEventListener('click', () => {
+                // Remove mark and glow effect from all files
+                document.querySelectorAll('.file-item').forEach(item => {
+                    item.classList.remove('selected-file');
+                });
+
+                // Mark and add glow effect to the selected file
+                fileDiv.classList.add('selected-file');
+
+                // Redirect to the homepage with the selected file name as a URL parameter
+                window.location.href = `{{url_for("home")}}?selectedFile=${encodeURIComponent(file.name)}`;
+            });
+
             // Append children
             fileDiv.appendChild(iconImg);
             fileDiv.appendChild(fileName);
