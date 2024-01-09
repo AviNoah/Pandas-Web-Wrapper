@@ -6,11 +6,13 @@ function getNotification() {
     return urlParams.get('notification');
 }
 
-// Function to display a notification using system.alert
+// Function to display a notification using window.alert
 function displayNotification() {
     const notification = getNotification();
     if (notification) {
-        // Use system.alert to display the notification
-        system.alert(notification);
+        // Use window.alert to display the notification
+        window.alert(notification);
     }
 }
+// Call the displayNotification function when the page loads
+window.onload = displayNotification;
