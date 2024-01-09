@@ -41,9 +41,6 @@ function displayFiles() {
 
                 // Mark and add glow effect to the selected file
                 fileDiv.classList.add('selected-file');
-
-                // Redirect to the homepage with the selected file name as a URL parameter
-                window.location.href = `{{url_for("home")}}?selectedFile=${encodeURIComponent(file.name)}`;
             });
 
             // Append children
