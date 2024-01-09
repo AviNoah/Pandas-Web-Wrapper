@@ -7,7 +7,10 @@ function displayFiles() {
     const fileListContainer = document.getElementById('file-list');
 
     if (typeof fileData === 'undefined')
-        throw Error("filesData is not defined or was not passed to script correctly")
+        throw Error("filesData is not defined or was not passed to script correctly");
+
+    if (typeof image_folder === "undefined")
+        throw Error("image_folder is not defined or was not passed to script correctly");
 
     if (fileListContainer) {
         fileData.forEach(file => {
@@ -17,7 +20,8 @@ function displayFiles() {
 
             // Create image
             const iconImg = document.createElement('img');
-            iconImg.src = `{{ url_for('static', filename='images/') }}${file.icon}`;
+            iconImg.src = `${image_folder}${file.icon}`;
+            console.log(iconImg.src)
             iconImg.alt = 'Excel Icon';
 
             // Create paragraph
