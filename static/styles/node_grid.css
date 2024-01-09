@@ -1,0 +1,18 @@
+body,
+html {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+#graph-container {
+    position: relative;
+}
+
+.node {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: blue;
+    /* Customize node styles as needed */
+}
