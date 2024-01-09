@@ -6,6 +6,9 @@ function displayFiles() {
     // Get file list container
     const fileListContainer = document.getElementById('file-list');
 
+    if (typeof (files) === undefined)
+        throw Error("files is not defined or was not passed to script correctly")
+
     // Access files variable passed from render_template
     const fileData = JSON.parse(files)
 
