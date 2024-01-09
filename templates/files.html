@@ -8,9 +8,14 @@
     <h1>File Display</h1>
 
     <!-- File display section -->
-    <div id="file-list">
-      <!-- Files will be dynamically added here -->
-    </div>
+    <div id="file-list"></div>
+
+    <!-- Define files_json in the global scope -->
+    <script>
+      const fileData = JSON.parse(files_json)
+    </script>
+
+    <!-- Include the fileDisplay.js script -->
     <script src="{{ url_for('static', filename = 'javascripts/fileDisplay.js') }}"></script>
   </body>
 </html>

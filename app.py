@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 from urllib.parse import quote
 from functools import wraps
 import os
@@ -67,11 +67,17 @@ def upload_file() -> tuple[str, str]:
 @app.route("/process_files")
 def show_files():
     # Show the files
+    
+    # Get files
     files = os.listdir(app.config["UPLOAD_FOLDER"])
+    
+    # Add a logo to each one
     file_data: list[dict] = [
         {"name": file, "icon": "excel_logo_closed.webp"} for file in files
     ]
-    return render_template("files.html", files=file_data)
+    file_data_json = jsonify(file_data).json
+    
+    return render_template("files.html", files_json=file_data_json)
 
 
 @app.route("/discard_files")
