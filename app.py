@@ -4,6 +4,7 @@ from functools import wraps
 import os
 import shutil
 import tempfile
+import pandas as pd
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
@@ -41,6 +42,19 @@ def is_allowed_file(filename) -> bool:
 @app.route("/")
 def home():
     return render_template("home.html")
+
+
+@app.route("/process_selection", methods=["POST"])
+def process_selection():
+    data = request.json
+    selected_value = data.get("selection")
+
+    file_path = os.path.join(app["UPLOAD_FOLDER"], selected_value)
+    df: pd.DataFrame = pd.read_excel(file_path)
+
+    # Return a response to the client
+    response_data = {"message": "Selection processed successfully"}
+    return jsonify(response_data)
 
 
 @app.route("/upload", methods=["POST"])
