@@ -3,7 +3,7 @@ function redirect_selection() {
     let selectedFile = document.querySelector('.file-item.selected-file');
 
     if (selectedFile !== null)
-        window.location.href = `{{url_for("home")}}?selectedFile=${encodeURIComponent(selectedFile.textContent)}`;
+        window.location.href = `${home_folder}?selectedFile=${encodeURIComponent(selectedFile.textContent)}`;
     else
-        window.location.href = '{{url_for("home")}}';
+        window.location.href = home_folder;
 }

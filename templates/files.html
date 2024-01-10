@@ -19,6 +19,7 @@
       const fileData = {{files_json | tojson | safe}}
       // Naming scheme for images in image_folder is (file_type)_logo_(closed or opened).png
       const image_folder = "{{ url_for('static', filename = 'images/')}}"
+      const home_folder = "{{url_for('home')}}";
     </script>
 
     <!-- Include the fileDisplay.js script -->
