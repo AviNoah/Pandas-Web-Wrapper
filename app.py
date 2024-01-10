@@ -73,7 +73,7 @@ def show_files():
 
     # Add a logo to each one
     file_data: list[dict] = [
-        {"name": file, "icon": "excel_logo_closed.webp"} for file in files
+        {"name": file, "icon": "excel_logo"} for file in files
     ]
 
     return render_template("files.html", files_json=file_data)

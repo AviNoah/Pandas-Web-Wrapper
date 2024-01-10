@@ -17,6 +17,7 @@
     <!-- Define files_json in the global scope -->
     <script>
       const fileData = {{files_json | tojson | safe}}
+      // Naming scheme for images in image_folder is (file_type)_logo_(closed or opened).png
       const image_folder = "{{ url_for('static', filename = 'images/')}}"
     </script>
 

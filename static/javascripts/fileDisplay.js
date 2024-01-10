@@ -20,8 +20,7 @@ function displayFiles() {
 
             // Create image
             const iconImg = document.createElement('img');
-            iconImg.src = `${image_folder}${file.icon}`;
-            console.log(iconImg.src)
+            iconImg.src = `${image_folder}${file.icon}_closed.png`;
             iconImg.alt = 'Excel Icon';
 
             // Shrink image
@@ -37,10 +36,16 @@ function displayFiles() {
                 // Remove mark and glow effect from all files
                 document.querySelectorAll('.file-item').forEach(item => {
                     item.classList.remove('selected-file');
+                    // Set iconImg child's img source to closed excel logo
+                    var img_child = item.querySelector('img')
+                    img_child.src = `${image_folder}${file.icon}_closed.png`;
                 });
 
                 // Mark and add glow effect to the selected file
                 fileDiv.classList.add('selected-file');
+                // Set iconImg child's img source to closed excel logo
+                img_child.src = `${image_folder}${file.icon}_opened.png`;
+
             });
 
             // Append children
