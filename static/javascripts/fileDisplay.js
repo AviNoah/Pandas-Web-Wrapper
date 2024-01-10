@@ -44,6 +44,7 @@ function displayFiles() {
                 // Mark and add glow effect to the selected file
                 fileDiv.classList.add('selected-file');
                 // Set iconImg child's img source to closed excel logo
+                var img_child = fileDiv.querySelector('img')
                 img_child.src = `${image_folder}${file.icon}_opened.png`;
 
             });

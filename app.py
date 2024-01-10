@@ -72,9 +72,7 @@ def show_files():
     files = os.listdir(app.config["UPLOAD_FOLDER"])
 
     # Add a logo to each one
-    file_data: list[dict] = [
-        {"name": file, "icon": "excel_logo"} for file in files
-    ]
+    file_data: list[dict] = [{"name": file, "icon": "excel_logo"} for file in files]
 
     return render_template("files.html", files_json=file_data)
 
