@@ -62,7 +62,7 @@ function updateSpreadsheetElement(sheet, editable = false) {
         cell.appendChild(wrapperDiv);
 
         // Apply filter when the filter image is clicked
-        filterImg.addEventListener('click', () => applyFilter(cell.cellIndex + 1)); // Add 1 to cellIndex to adjust for 0-based index
+        filterImg.addEventListener('click', () => addFilter(cell.cellIndex + 1)); // Add 1 to cellIndex to adjust for 0-based index
     });
 }
 
@@ -71,7 +71,68 @@ function escapeRegExp(string) {
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
 }
 
-function applyFilter(column) {
+// Function to create a filter popup element
+function createFilterPopup(filename, columnIndex) {
+    // Check if a filter popup already exists and remove it
+    const existingPopup = document.querySelector('.filter-popup');
+    if (existingPopup) {
+        existingPopup.parentNode.removeChild(existingPopup);
+    }
+
+    // Create a filter popup element
+    const filterPopup = document.createElement('div');
+    filterPopup.className = 'filter-popup';
+
+    fetch('/spreadsheet_filter_popup').then(response => {
+        if (!response.ok) {
+            console.error("Failed to fetch filterPopup html file");
+            return null;
+        }
+        return response.text();
+    })
+        .then(content => {
+            filterPopup.innerHTML = content;
+            document.body.appendChild(filterPopup);
+
+            // Make the filter submit button run process_input every time it is clicked
+            document.getElementById('filter_submit_button').addEventListener('click', () => applyFilter(filename, columnIndex));
+        }).catch(error => console.error(error))
+
+    return filterPopup;
+}
+
+
+// Function to handle closing the filter popup
+function closeFilterPopup(event) {
+    const filterPopup = document.querySelector('.filter-popup');
+
+    // Check if the clicked element or its parent is outside the filter popup
+    if (!filterPopup)
+        return;  // Not initialized yet
+
+    if (
+        (event.target.classList.contains('selected') || event.target.parentElement.classList.contains('selected')) &&
+        !filterPopup.contains(event.target)
+    ) {
+        // Filter icon was selected again, don't close popup
+        return;
+    }
+
+    if (event.target !== filterPopup && !filterPopup.contains(event.target)) {
+        filterPopup.style.display = 'none';
+        document.removeEventListener('click', closeFilterPopup);
+    }
+}
+
+
+function addFilter(column) {
+    //TODO: get filename
+    const filename = null
+    createFilterPopup(filename, column);
+    document.addEventListener('click', (event) => closeFilterPopup(event));
+}
+
+function applyFilter(filename, column) {
     // Get the selected filter type
     const selection = document.getElementById('filter_selector').value;
 
@@ -82,9 +143,7 @@ function applyFilter(column) {
 
     const escapedPatternInput = escapeRegExp(patternInput);
 
-    const data = { 'filename': null, 'column': column, 'method': selection, 'input': escapedPatternInput };
-
-    //TODO add to data filename
+    const data = { 'filename': filename, 'column': column, 'method': selection, 'input': escapedPatternInput };
 
     fetch("/filters", {
         method: "POST",

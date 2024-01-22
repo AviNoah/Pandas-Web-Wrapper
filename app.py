@@ -200,6 +200,11 @@ def filters():
         jsonify({"error": "Unsupported method"}), 500
 
 
+@app.route("/spreadsheet_filter_popup", methods=["GET"])
+def show_spreadsheet_filter_popup():
+    render_template("filter_popup.html")
+
+
 if __name__ == "__main__":
     port = 5000
     app.run(debug=True, port=port)
