@@ -49,6 +49,17 @@ def selected_file():
         return jsonify("Unsupported method"), 500
 
 
+@app.route("/filters", methods=["POST", "GET"])
+def filters():
+    # Either GET or UPDATE the filters of the given file.
+    if request.method == "POST":
+        ...
+    elif request.method == "GET":
+        ...
+
+    raise NotImplementedError
+
+
 if __name__ == "__main__":
     port = 5000
     app.run(debug=True, port=port)

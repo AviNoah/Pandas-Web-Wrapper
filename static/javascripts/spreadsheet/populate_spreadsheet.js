@@ -66,7 +66,6 @@ function updateSpreadsheetElement(sheet, editable = false) {
     });
 }
 
-function applyFilter(column)
-{
+function applyFilter(column) {
     // TODO: Implement this to POST the added filter to back-end.
 }
