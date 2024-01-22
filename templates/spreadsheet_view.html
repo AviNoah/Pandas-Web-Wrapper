@@ -14,6 +14,6 @@
   <body>
     <div id="spreadsheet"></div>
     <input type="number" min="1" max="1" step="1" value="1" name="Sheet: " id="sheetSelector" class="modern-number-input" />
-    <script src="../static/javascripts/spreadsheet/populate_spreadsheet.js"></script>
+    <script src="{{ url_for('static', filename='javascripts/spreadsheet/populate_spreadsheet.js') }}"></script>
   </body>
 </html>
