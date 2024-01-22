@@ -26,8 +26,19 @@ def is_valid_ext(filename: str) -> bool:
     return ext in ALLOWED_EXTENSIONS
 
 
-def save_file():
-    ...
+def save_file(file) -> str:
+    # Store the file in UPLOAD_FOLDER under a directory of the same as its name.
+    # Return path, if failed exception must be handled in caller.
+    parent = app.config["UPLOAD_FOLDER"]
+    folder_name, _ = os.path.splitext(file.filename)  # discard extension
+
+    path = os.path.join(parent, folder_name)
+    os.makedirs(path, exist_ok=True)  # Make sure folder exists
+
+    file_path = os.path.join(path, file.filename)
+
+    file.save(file_path)
+    return file_path
 
 
 # Landing page
