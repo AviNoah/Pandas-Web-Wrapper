@@ -16,6 +16,20 @@ selected_file_path: str = (
 )
 
 
+# Helper methods
+def is_valid_ext(filename: str) -> bool:
+    global ALLOWED_EXTENSIONS
+    _, ext = os.path.splitext(os.path.basename(filename))  # discard name
+    if not ext:
+        return False  # No extension isn't valid.
+
+    return ext in ALLOWED_EXTENSIONS
+
+
+def save_file():
+    ...
+
+
 # Landing page
 @app.route("/")
 def index():
@@ -36,7 +50,7 @@ def show_spreadsheet():
 def selected_file():
     global selected_file_path
     if request.method == "POST":
-        # Update selected file
+        # Update selected file, will be managed in the select_file.html page
         return jsonify({"message": "Selected file updated successfully"}), 200
     elif request.method == "GET":
         # Get selected file
@@ -47,6 +61,24 @@ def selected_file():
 
     else:
         return jsonify("Unsupported method"), 500
+
+
+@app.route("/upload_file", methods=["POST"])
+def upload_file():
+    # Save file given into upload folder.
+    files = request.files.values()
+    if not files:
+        return jsonify({"message": "No files to add were supplied"}), 200
+
+    files = filter(lambda file: is_valid_ext(file.filename), files)
+
+    try:
+        for file in files:
+            save_file(file)
+
+        return jsonify({"message": "Files saved successfully"}), 200
+    except Exception:
+        return jsonify({"error": "File saving was unsuccessful"}), 500
 
 
 @app.route("/filters", methods=["POST", "GET"])
