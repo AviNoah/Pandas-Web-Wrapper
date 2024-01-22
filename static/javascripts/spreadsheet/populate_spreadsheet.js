@@ -66,6 +66,47 @@ function updateSpreadsheetElement(sheet, editable = false) {
     });
 }
 
+
+function escapeRegExp(string) {
+    // Escape regex
+    return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
+}
+
 function applyFilter(column) {
-    // TODO: Implement this to POST the added filter to back-end.
+    // Get the selected filter type
+    const selection = document.getElementById('filter_selector').value;
+
+    // Get the filter input value
+    const patternInput = document.getElementById('filter_input').value;
+
+    console.log(`Pattern input is: ${patternInput} for selection ${selection} on column ${columnIndex}`)
+
+    const escapedPatternInput = escapeRegExp(patternInput);
+
+    const data = { 'filename': null, 'column': column, 'method': selection, 'input': escapedPatternInput };
+
+    //TODO add to data filename
+
+    fetch("/filters", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+        .then(response => {
+            // Check if it's successful
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(responseData => {
+            // Log the response data
+            console.log(responseData);
+        })
+        .catch(error => {
+            // Handle errors
+            console.error("Error:", error);
+        });
 }
