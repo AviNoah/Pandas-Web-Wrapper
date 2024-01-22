@@ -207,8 +207,11 @@ def show_spreadsheet_filter_popup():
 
 @app.route("/spreadsheet/upload/test_file")
 def test_file():
-    df = pd.read_excel("test_file/test.xlsx")
-    return send_file(df.to_excel(), as_attachment=True)
+    try:
+        df = pd.read_excel("test_file/test.xlsx")
+        return send_file(df.to_excel(), as_attachment=True)
+    except:
+        return jsonify({"error": "Unable to retrieve test file"}), 500
 
 
 if __name__ == "__main__":

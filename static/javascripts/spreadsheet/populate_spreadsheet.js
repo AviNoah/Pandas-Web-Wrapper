@@ -8,7 +8,7 @@ selectedSheetSpinner.addEventListener('change', changeSheet);
 // Function to handle changes in the selected sheet spinner
 function changeSheet() {
     // Make a GET request
-    fetch('selected_file').then(response => {
+    fetch('/selected_file').then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
@@ -203,3 +203,18 @@ function adjustSpinner(sheetCount) {
     selectedSheetSpinner.max = sheetCount;
 }
 
+
+// TODO: Remove test file later
+fetch("/spreadsheet/upload/test_file")
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Test file was not retrieved');
+        }
+        return response.blob();  // Extract response as blob
+    })
+    .then(blob => {
+        openFile(blob);
+    })
+    .catch(error => {
+        console.error('Error fetching the test file:', error);
+    });
