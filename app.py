@@ -151,7 +151,7 @@ def selected_file():
         # Get selected file
         df = get_file_df(selected_file_name)
         if df:
-            return send_file(df.to_excel(), as_attachment=True)
+            return send_file(df.to_excel(), as_attachment=True), 200
         else:
             return jsonify({"error": "Selected file not found"}), 404
 
@@ -209,9 +209,9 @@ def show_spreadsheet_filter_popup():
 def test_file():
     try:
         df = pd.read_excel("test_file/test.xlsx")
-        return send_file(df.to_excel(), as_attachment=True)
-    except:
-        return jsonify({"error": "Unable to retrieve test file"}), 500
+        return send_file(df.to_excel(), as_attachment=True), 200
+    except Exception as e:
+        return jsonify({"error": f"Unable to retrieve test file: {e}"}), 500
 
 
 if __name__ == "__main__":
