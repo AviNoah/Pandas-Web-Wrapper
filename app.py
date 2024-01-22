@@ -18,12 +18,12 @@ def index():
 
 
 @app.route("/select_file")
-def select_file():
+def show_select_file():
     return render_template("select_file.html")
 
 
 @app.route("/spreadsheet_view")
-def select_file():
+def show_spreadsheet():
     return render_template("spreadsheet_view.html")
 
 
