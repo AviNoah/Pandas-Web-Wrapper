@@ -145,6 +145,7 @@ def selected_file():
 
     if request.method == "POST":
         # Update selected file, will be sent from select_file.html
+        # TODO: add update_file method
         return jsonify({"message": "Selected file updated successfully"}), 200
     elif request.method == "GET":
         # Get selected file
@@ -187,9 +188,14 @@ def filters():
     selected_file_name = json_data["filename"]
 
     if request.method == "POST":
+        # TODO: implement a set_file_filters method
         ...
     elif request.method == "GET":
-        ...
+        file_filters: list[dict] = get_file_filters(selected_file_name)
+        return (
+            jsonify({"message": "Filters read successfully", "filters": file_filters}),
+            200,
+        )
 
     raise NotImplementedError
 
