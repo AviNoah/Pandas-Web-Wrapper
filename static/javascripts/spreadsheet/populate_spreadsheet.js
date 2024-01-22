@@ -66,7 +66,6 @@ function updateSpreadsheetElement(sheet, editable = false) {
     });
 }
 
-
 function escapeRegExp(string) {
     // Escape regex
     return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // $& means the whole matched string
@@ -109,4 +108,35 @@ function applyFilter(column) {
             // Handle errors
             console.error("Error:", error);
         });
+}
+
+function openFile(file) {
+    if (file) {
+        const reader = new FileReader();
+
+        reader.onload = function (event) {
+            try {
+                const data = event.target.result;  // Result of file read
+                const workbook = XLSX.read(data, { type: 'binary' })
+
+                // Always start on the first page
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+
+                updateSpreadsheetElement(sheet);
+
+                // Adjust the spinner based on the number of sheets
+                adjustSpinner(workbook.SheetNames.length);
+            } catch (error) {
+                console.error("Error reading the Excel file:", error);
+            }
+        }
+    }
+}
+
+// Function to adjust the selected sheet spinner properties
+function adjustSpinner(sheetCount) {
+    // Set the value to 1 and change the maximum value to sheet count
+    selectedSheetSpinner.value = 1;
+    selectedSheetSpinner.max = sheetCount;
 }
