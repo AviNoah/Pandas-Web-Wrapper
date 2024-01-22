@@ -1,5 +1,6 @@
 from flask import *
 from urllib.parse import quote
+import os
 import tempfile
 import pandas as pd
 
@@ -9,6 +10,10 @@ UPLOAD_FOLDER: str = tempfile.mkdtemp()
 ALLOWED_EXTENSIONS: set = {".xlsx", ".csv"}
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+selected_file_path: str = (
+    None  # No need to make user session management, only one person will us this
+)
 
 
 # Landing page
@@ -25,6 +30,23 @@ def show_select_file():
 @app.route("/spreadsheet_view")
 def show_spreadsheet():
     return render_template("spreadsheet_view.html")
+
+
+@app.route("/selected_file", methods=["POST", "GET"])
+def selected_file():
+    global selected_file_path
+    if request.method == "POST":
+        # Update selected file
+        return jsonify({"message": "Selected file updated successfully"}), 200
+    elif request.method == "GET":
+        # Get selected file
+        if os.path.exists(selected_file_path):
+            return send_file(selected_file_path, as_attachment=True)
+        else:
+            return jsonify({"error": "Selected file not found"}), 404
+
+    else:
+        return jsonify("Unsupported method"), 500
 
 
 if __name__ == "__main__":
