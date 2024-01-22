@@ -83,7 +83,7 @@ function createFilterPopup(filename, columnIndex) {
     const filterPopup = document.createElement('div');
     filterPopup.className = 'filter-popup';
 
-    fetch('/spreadsheet_filter_popup').then(response => {
+    fetch('/spreadsheet/filter/popup').then(response => {
         if (!response.ok) {
             console.error("Failed to fetch filterPopup html file");
             return null;
@@ -146,7 +146,7 @@ function applyFilter(filename, column) {
     const data = { 'filename': filename, 'column': column, 'method': selection, 'input': escapedPatternInput };
 
     // Save new filter
-    fetch("/filters", {
+    fetch("/spreadsheet/filter", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

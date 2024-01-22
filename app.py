@@ -123,12 +123,12 @@ def index():
     return render_template("index.html")
 
 
-@app.route("/select_file")
+@app.route("/select_file/show")
 def show_select_file():
     return render_template("select_file.html")
 
 
-@app.route("/spreadsheet_view")
+@app.route("/spreadsheet/show")
 def show_spreadsheet():
     return render_template("spreadsheet_view.html")
 
@@ -159,7 +159,7 @@ def selected_file():
         return jsonify("Unsupported method"), 500
 
 
-@app.route("/upload_file", methods=["POST"])
+@app.route("/select_file/upload_file", methods=["POST"])
 def upload_file():
     # Save file given into upload folder.
     files = request.files.values()
@@ -177,7 +177,7 @@ def upload_file():
         return jsonify({"error": "File saving was unsuccessful"}), 500
 
 
-@app.route("/filters", methods=["POST", "GET"])
+@app.route("/spreadsheet/filter", methods=["POST", "GET"])
 def filters():
     # Either GET or UPDATE the filters of the given file.
 
@@ -200,7 +200,7 @@ def filters():
         jsonify({"error": "Unsupported method"}), 500
 
 
-@app.route("/spreadsheet_filter_popup", methods=["GET"])
+@app.route("/spreadsheet/filter/popup", methods=["GET"])
 def show_spreadsheet_filter_popup():
     render_template("filter_popup.html")
 
