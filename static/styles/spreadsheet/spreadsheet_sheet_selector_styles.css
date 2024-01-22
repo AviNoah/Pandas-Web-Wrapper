@@ -1,0 +1,40 @@
+/* Reset default styles for number input */
+input[type="number"] {
+    -webkit-appearance: textfield;
+    appearance: textfield;
+    margin: 0;
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background-color: transparent;
+    font-size: inherit;
+}
+
+/* Style the container to create a modern look */
+.modern-number-input {
+    display: inline-block;
+    position: relative;
+}
+
+/* Style the input field */
+.modern-number-input input {
+    width: 40px;
+    /* Set the width according to your design */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Style the up and down arrows */
+.modern-number-input input::-webkit-inner-spin-button,
+.modern-number-input input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.modern-number-input input:focus {
+    outline: none;
+    border-color: #007bff;
+    /* Add a focus border color if needed */
+}
