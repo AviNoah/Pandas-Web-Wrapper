@@ -12,8 +12,25 @@ app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Landing page
 app.route("/")
+
+
 def index():
-    return render_template('')
+    return render_template("")
+
+
+app.route("/select_file")
+
+
+def select_file():
+    return render_template("select_file.html")
+
+
+app.route("/spreadsheet_view")
+
+
+def select_file():
+    return render_template("spreadsheet_view.html")
+
 
 if __name__ == "__main__":
     port = 5000
