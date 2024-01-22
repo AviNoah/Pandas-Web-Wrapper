@@ -205,6 +205,12 @@ def show_spreadsheet_filter_popup():
     render_template("filter_popup.html")
 
 
+@app.route("/spreadsheet/upload/test_file")
+def test_file():
+    df = pd.read_excel("test_file/test.xlsx")
+    return send_file(df.to_excel(), as_attachment=True)
+
+
 if __name__ == "__main__":
     port = 5000
     app.run(debug=True, port=port)
