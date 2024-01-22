@@ -145,7 +145,7 @@ def selected_file():
 
     if request.method == "POST":
         # Update selected file, will be sent from select_file.html
-        # TODO: add update_file method
+        # TODO: add update_file method, which will rename the file
         return jsonify({"message": "Selected file updated successfully"}), 200
     elif request.method == "GET":
         # Get selected file
