@@ -105,6 +105,8 @@ def show_spreadsheet():
 
 @app.route("/selected_file", methods=["POST", "GET"])
 def selected_file():
+    # A method to get data of or update a selected file.
+
     json_data = request.get_json()
     if not json_data or "filename" in json_data:
         return jsonify({"error": "JSON data doesn't contain path"}), 500
