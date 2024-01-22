@@ -10,6 +10,7 @@ ALLOWED_EXTENSIONS: set = {".xlsx", ".csv"}
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+
 # Landing page
 @app.route("/")
 def index():
