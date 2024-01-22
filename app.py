@@ -33,6 +33,8 @@ def save_file(file) -> str:
     folder_name, _ = os.path.splitext(file.filename)  # discard extension
 
     path = os.path.join(parent, folder_name)
+    
+    # TODO: Handle folders with the same name later
     os.makedirs(path, exist_ok=True)  # Make sure folder exists
 
     file_path = os.path.join(path, file.filename)
