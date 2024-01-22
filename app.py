@@ -196,8 +196,8 @@ def filters():
             jsonify({"message": "Filters read successfully", "filters": file_filters}),
             200,
         )
-
-    raise NotImplementedError
+    else:
+        jsonify({"error": "Unsupported method"}), 500
 
 
 if __name__ == "__main__":
