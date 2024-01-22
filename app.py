@@ -7,13 +7,13 @@ import pandas as pd
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
 UPLOAD_FOLDER: str = tempfile.mkdtemp()
-ALLOWED_EXTENSIONS: set = {".xlsx", ".csv"}
+readers = {
+    ".csv": pd.read_csv,
+    ".xlsx": pd.read_excel,
+}
+ALLOWED_EXTENSIONS: set = set(readers.keys())
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
-
-selected_file_path: str = (
-    None  # No need to make user session management, only one person will us this
-)
 
 
 # Helper methods
@@ -32,15 +32,59 @@ def save_file(file) -> str:
     parent = app.config["UPLOAD_FOLDER"]
     folder_name, _ = os.path.splitext(file.filename)  # discard extension
 
-    path = os.path.join(parent, folder_name)
-    
     # TODO: Handle folders with the same name later
-    os.makedirs(path, exist_ok=True)  # Make sure folder exists
+    path = os.path.join(parent, folder_name)
+    os.makedirs(path, exist_ok=True)  # Make sure folder structure exists
 
     file_path = os.path.join(path, file.filename)
 
     file.save(file_path)
     return file_path
+
+
+def get_file_df(filename) -> pd.DataFrame:
+    # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
+    # run all the filters saved in its folder on it before returning.
+    # If filename doesn't exist in UPLOAD FOLDER return None.
+    global readers, ALLOWED_EXTENSIONS
+    filename: str = os.path.basename(filename)
+    name_part, ext = os.path.splitext(filename)
+
+    directory = os.path.join(app.config["UPLOAD_FOLDER"], name_part)
+
+    if not os.path.exists(directory):
+        return None  # Doesn't exist
+
+    file_path = os.path.join(directory, filename)
+
+    if not ext in ALLOWED_EXTENSIONS:
+        return None  # Invalid extension
+
+    if not os.path.exists(file_path):
+        raise Exception(f"Excel file doesn't exist at {file_path}")
+
+    try:
+        # Fetch correct reader for this type
+        df: pd.DataFrame = readers[ext](file_path)
+    except IOError as e:
+        raise Exception(f"Failed reading from {file_path}: {e}")
+
+    # Read filters JSON
+    json_path = os.path.join(directory, "filters.json")
+    if not os.path.exists(json_path):
+        return df  # No filters exists for this file.
+
+    try:
+        with open(json_path, "r") as file:
+            json_data = json.load(file)
+    except json.JSONDecodeError as e:
+        raise Exception(f"Failed decoding JSON from {json_path}: {e}")
+
+    # json_data is a list of filters, each filter contains these keys: column, method, input.
+    for filter in json_data:
+        column, method, inp = filter["column"], filter["method"], filter["input"]
+        # TODO: filter DF using given parameters
+        ...
 
 
 # Landing page
@@ -61,14 +105,20 @@ def show_spreadsheet():
 
 @app.route("/selected_file", methods=["POST", "GET"])
 def selected_file():
-    global selected_file_path
+    json_data = request.get_json()
+    if not json_data or "filename" in json_data:
+        return jsonify({"error": "JSON data doesn't contain path"}), 500
+
+    selected_file_name = json_data["filename"]
+
     if request.method == "POST":
-        # Update selected file, will be managed in the select_file.html page
+        # Update selected file, will be sent from select_file.html
         return jsonify({"message": "Selected file updated successfully"}), 200
     elif request.method == "GET":
         # Get selected file
-        if os.path.exists(selected_file_path):
-            return send_file(selected_file_path, as_attachment=True)
+        df = get_file_df(selected_file_name)
+        if df:
+            return send_file(df.to_excel(), as_attachment=True)
         else:
             return jsonify({"error": "Selected file not found"}), 404
 
