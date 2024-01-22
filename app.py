@@ -11,23 +11,17 @@ ALLOWED_EXTENSIONS: set = {".xlsx", ".csv"}
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 # Landing page
-app.route("/")
-
-
+@app.route("/")
 def index():
-    return render_template("")
+    return render_template("index.html")
 
 
-app.route("/select_file")
-
-
+@app.route("/select_file")
 def select_file():
     return render_template("select_file.html")
 
 
-app.route("/spreadsheet_view")
-
-
+@app.route("/spreadsheet_view")
 def select_file():
     return render_template("spreadsheet_view.html")
 
