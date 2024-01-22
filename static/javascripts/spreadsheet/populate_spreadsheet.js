@@ -145,6 +145,7 @@ function applyFilter(filename, column) {
 
     const data = { 'filename': filename, 'column': column, 'method': selection, 'input': escapedPatternInput };
 
+    // Save new filter
     fetch("/filters", {
         method: "POST",
         headers: {
@@ -157,6 +158,8 @@ function applyFilter(filename, column) {
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
+
+            changeSheet();  // Update sheet with new filter
             return response.json();
         })
         .then(responseData => {
