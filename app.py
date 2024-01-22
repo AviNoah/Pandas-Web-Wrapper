@@ -10,6 +10,10 @@ ALLOWED_EXTENSIONS: set = {".xlsx", ".csv"}
 
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
+# Landing page
+app.route("/")
+def index():
+    return render_template('')
 
 if __name__ == "__main__":
     port = 5000
