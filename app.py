@@ -42,11 +42,8 @@ def save_file(file) -> str:
     return file_path
 
 
-def get_file_df(filename) -> pd.DataFrame:
-    # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
-    # run all the filters saved in its folder on it before returning.
-    # If filename doesn't exist in UPLOAD FOLDER return None.
-    global readers, ALLOWED_EXTENSIONS
+def get_directory(filename) -> str | None:
+    global ALLOWED_EXTENSIONS
     filename: str = os.path.basename(filename)
     name_part, ext = os.path.splitext(filename)
 
@@ -55,13 +52,55 @@ def get_file_df(filename) -> pd.DataFrame:
     if not os.path.exists(directory):
         return None  # Doesn't exist
 
-    file_path = os.path.join(directory, filename)
-
     if not ext in ALLOWED_EXTENSIONS:
         return None  # Invalid extension
 
+    return directory
+
+
+def get_file_path(filename) -> str | None:
+    directory = get_directory(filename)
+    if not directory:
+        return None
+
+    file_path = os.path.join(directory, os.path.basename(filename))
+
     if not os.path.exists(file_path):
         raise Exception(f"Excel file doesn't exist at {file_path}")
+
+    return file_path
+
+
+def get_file_filters(filename) -> list[dict]:
+    # Read filters JSON
+    directory = get_directory(filename)
+    if not directory:
+        return []  # Empty filters data
+
+    json_path = os.path.join(directory, "filters.json")
+
+    if not os.path.exists(json_path):
+        return []  # No filters exists for this file.
+
+    try:
+        with open(json_path, "r") as file:
+            json_data: list[dict] = json.load(file)
+    except json.JSONDecodeError as e:
+        raise Exception(f"Failed decoding JSON from {json_path}: {e}")
+
+    # json_data is a list of filters, each filter contains these keys: column, method, input.
+    return json_data
+
+
+def get_file_df(filename) -> pd.DataFrame | None:
+    # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
+    # run all the filters saved in its folder on it before returning.
+    # If filename doesn't exist in UPLOAD FOLDER return None.
+    file_path = get_file_path(filename)
+    if not file_path:
+        return None
+
+    _, ext = os.path.splitext(filename)
 
     try:
         # Fetch correct reader for this type
@@ -69,19 +108,10 @@ def get_file_df(filename) -> pd.DataFrame:
     except IOError as e:
         raise Exception(f"Failed reading from {file_path}: {e}")
 
-    # Read filters JSON
-    json_path = os.path.join(directory, "filters.json")
-    if not os.path.exists(json_path):
-        return df  # No filters exists for this file.
-
-    try:
-        with open(json_path, "r") as file:
-            json_data = json.load(file)
-    except json.JSONDecodeError as e:
-        raise Exception(f"Failed decoding JSON from {json_path}: {e}")
+    file_filters: list[dict] = get_file_filters(filename)
 
     # json_data is a list of filters, each filter contains these keys: column, method, input.
-    for filter in json_data:
+    for filter in file_filters:
         column, method, inp = filter["column"], filter["method"], filter["input"]
         # TODO: filter DF using given parameters
         ...
@@ -109,7 +139,7 @@ def selected_file():
 
     json_data = request.get_json()
     if not json_data or "filename" in json_data:
-        return jsonify({"error": "JSON data doesn't contain path"}), 500
+        return jsonify({"error": "JSON data doesn't contain file name"}), 500
 
     selected_file_name = json_data["filename"]
 
@@ -149,6 +179,13 @@ def upload_file():
 @app.route("/filters", methods=["POST", "GET"])
 def filters():
     # Either GET or UPDATE the filters of the given file.
+
+    json_data = request.get_json()
+    if not json_data or "filename" in json_data:
+        return jsonify({"error": "JSON data doesn't contain file name"}), 500
+
+    selected_file_name = json_data["filename"]
+
     if request.method == "POST":
         ...
     elif request.method == "GET":
