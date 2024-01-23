@@ -259,7 +259,9 @@ def show_spreadsheet_filter_popup():
 def test_file():
     try:
         files = {"file": open("test_file/test.xlsx", "rb")}
-        return requests.post(url_for("upload_file"), files=files)
+        url = "http://127.0.0.1:5000" + url_for("upload_file")
+        response = requests.post(url, files=files)
+        return response
     except Exception as e:
         return jsonify({"error": f"Failed to load test file: {e}"})
 
