@@ -14,6 +14,7 @@ UPLOAD_FOLDER: str = tempfile.mkdtemp()
 readers = {
     ".csv": pd.read_csv,
     ".xlsx": pd.read_excel,
+    ".ods": pd.read_excel,
 }
 ALLOWED_EXTENSIONS: set = set(readers.keys())
 

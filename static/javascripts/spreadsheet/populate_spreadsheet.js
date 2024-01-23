@@ -176,7 +176,7 @@ function applyFilter(filename, column) {
     const data = { 'filename': filename, 'column': column, 'method': selection, 'input': escapedPatternInput };
 
     // Save new filter
-    fetch("/spreadsheet/filter", {
+    fetch("/filter/update", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
