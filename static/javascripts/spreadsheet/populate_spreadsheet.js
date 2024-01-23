@@ -205,7 +205,7 @@ function openFile(file) {
                 adjustSpinner(workbook.SheetNames.length);
 
                 // Save file name to sessionStorage.
-                sessionStorage.setItem('selected-file', file.filename);
+                sessionStorage.setItem('selected-file', file.filename);  //TODO: make sure it saves this
                 console.log(sessionStorage.getItem('selected-file'))
             } catch (error) {
                 console.error("Error reading the Excel file:", error);
