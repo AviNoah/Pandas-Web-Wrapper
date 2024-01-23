@@ -252,7 +252,7 @@ def filter_update():
 
 @app.route("/spreadsheet/filter/popup", methods=["GET"])
 def show_spreadsheet_filter_popup():
-    render_template("filter_popup.html")
+    return render_template("filter_popup.html")
 
 
 @app.route("/spreadsheet/upload/test_file")
