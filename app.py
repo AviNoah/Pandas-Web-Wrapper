@@ -198,7 +198,7 @@ def file_update():
     if request.method != "POST":
         return jsonify("Unsupported method"), 405
 
-    keys = {"filename", "sheet", "column", "method", "input"}
+    keys = {"filename", "sheet"}
 
     json_data = request.get_json()
     if not json_data or not keys.issubset(json_data.keys()):
@@ -256,7 +256,7 @@ def filter_update():
     if request.method != "POST":
         return jsonify({"error": "Unsupported method"}), 500
 
-    keys = {"filename", "sheet"}
+    keys = {"filename", "sheet", "column", "method", "input"}
 
     json_data = request.get_json()
     if not json_data or not keys.issubset(json_data.keys()):
