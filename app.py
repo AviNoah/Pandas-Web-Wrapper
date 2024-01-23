@@ -155,12 +155,12 @@ def index():
 
 @app.route("/select_file/show")
 def show_select_file():
-    return render_template("select_file.html")
+    return render_template("select_file/select_file.html")
 
 
 @app.route("/spreadsheet/show")
 def show_spreadsheet():
-    return render_template("spreadsheet_view.html")
+    return render_template("spreadsheet/spreadsheet_view.html")
 
 
 @app.route("/file/get", methods=["GET"])

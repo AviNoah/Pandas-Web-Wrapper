@@ -97,7 +97,7 @@ function createFilterPopup(filename, columnIndex) {
     const filterPopup = document.createElement('div');
     filterPopup.className = 'filter-popup';
     // todo fix how this looks
-    fetch('/templates/filter_popup.html').then(response => {
+    fetch('/templates/spreadsheet/filter_popup.html').then(response => {
         if (!response.ok) {
             console.error("Failed to fetch filterPopup html file");
             return null;
