@@ -95,7 +95,7 @@ function createFilterPopup(filename, columnIndex) {
 
     // Create a filter popup element
     const filterPopup = document.createElement('div');
-    filterPopup.className = 'filter-popup-wrapper';
+    filterPopup.className = 'filter-popup';
     // todo fix how this looks
     fetch('/spreadsheet/filter/popup').then(response => {
         if (!response.ok) {
