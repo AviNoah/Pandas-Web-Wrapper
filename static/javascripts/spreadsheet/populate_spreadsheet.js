@@ -7,8 +7,16 @@ selectedSheetSpinner.addEventListener('change', changeSheet);
 
 // Function to handle changes in the selected sheet spinner
 function changeSheet() {
+    data = { filename: sessionStorage.getItem("File-Name"), sheet: selectedSheetSpinner.value }
+
     // Make a GET request
-    fetch('/selected_file').then(response => {
+    fetch('/file/get', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    }).then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }

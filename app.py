@@ -97,7 +97,7 @@ def get_file_filters(filename) -> list[dict]:
     return json_data
 
 
-def get_file_df(filename) -> pd.DataFrame | None:
+def get_file_df(filename) -> dict[pd.DataFrame] | None:
     # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
     # run all the filters saved in its folder on it before returning.
     # If filename doesn't exist in UPLOAD FOLDER return None.
@@ -109,7 +109,7 @@ def get_file_df(filename) -> pd.DataFrame | None:
 
     try:
         # Fetch correct reader for this type
-        df: pd.DataFrame = readers[ext](file_path)
+        df: dict[pd.DataFrame] = readers[ext](file_path, sheet_name=None)
     except IOError as e:
         raise Exception(f"Failed reading from {file_path}: {e}")
 
@@ -172,13 +172,15 @@ def file_get():
         return jsonify("Unsupported method"), 405
 
     json_data = request.get_json()
-    if not json_data or not "filename" in json_data:
-        return jsonify({"error": "JSON data doesn't contain file name"}), 500
+    if not json_data or not "filename" in json_data or not "sheet" in json_data:
+        return jsonify({"error": "JSON data doesn't contain file name or sheet"}), 500
 
     selected_file_name = json_data["filename"]
+    selected_sheet = json_data["sheet"]
 
     # Get selected file
-    df = get_file_df(selected_file_name)
+    dfs: dict[pd.DataFrame] = get_file_df(selected_file_name)
+    df: pd.DataFrame = dfs[selected_sheet - 1]  # Adjust for 0 based indexing
     response = send_df(df, selected_file_name, error="Selected file not found")
     return response
 
@@ -191,10 +193,11 @@ def file_update():
         return jsonify("Unsupported method"), 405
 
     json_data = request.get_json()
-    if not json_data or not "filename" in json_data:
-        return jsonify({"error": "JSON data doesn't contain file name"}), 500
+    if not json_data or not "filename" in json_data or not "sheet" in json_data:
+        return jsonify({"error": "JSON data doesn't contain file name or sheet"}), 500
 
     selected_file_name = json_data["filename"]
+    selected_sheet = json_data["sheet"]
 
     # TODO: Allow renaming file and updating {excel file's contents} <- check if needing the ability to edit is needed
     return jsonify({"message": "Selected file updated successfully"}), 200
