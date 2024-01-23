@@ -161,9 +161,12 @@ def show_spreadsheet():
     return render_template("spreadsheet_view.html")
 
 
-@app.route("/selected_file", methods=["POST", "GET"])
+@app.route("/file/get", methods=["POST", "GET"])
 def selected_file():
     # A method to get data of or update a selected file.
+
+    if request.method != "GET":
+        return jsonify("Unsupported method"), 500
 
     json_data = request.get_json()
     if not json_data or "filename" in json_data:
@@ -171,20 +174,29 @@ def selected_file():
 
     selected_file_name = json_data["filename"]
 
-    if request.method == "POST":
-        # Update data of selected file, will be sent from select_file.html
-        # TODO: add update_file method, which will rename the file if the file had been renamed
-        return jsonify({"message": "Selected file updated successfully"}), 200
-    elif request.method == "GET":
-        # Get selected file
-        df = get_file_df(selected_file_name)
-        return send_df(df, selected_file_name, error="Selected file not found")
+    # Get selected file
+    df = get_file_df(selected_file_name)
+    return send_df(df, selected_file_name, error="Selected file not found")
 
-    else:
+
+@app.route("/file/update", methods=["POST"])
+def update_file():
+    # A Method to update a file's data
+
+    if request.method != "POST":
         return jsonify("Unsupported method"), 500
 
+    json_data = request.get_json()
+    if not json_data or "filename" in json_data:
+        return jsonify({"error": "JSON data doesn't contain file name"}), 500
 
-@app.route("/select_file/upload_file", methods=["POST"])
+    selected_file_name = json_data["filename"]
+
+    # TODO: Allow renaming file and updating {excel file's contents} <- check if needing the ability to edit is needed
+    return jsonify({"message": "Selected file updated successfully"}), 200
+
+
+@app.route("/file/upload", methods=["POST"])
 def upload_file():
     # Save file given into upload folder.
     files = request.files.values()
