@@ -163,7 +163,7 @@ def show_spreadsheet():
 
 
 @app.route("/file/get", methods=["POST", "GET"])
-def selected_file():
+def file_get():
     # A method to get data of or update a selected file.
 
     if request.method != "GET":
@@ -181,7 +181,7 @@ def selected_file():
 
 
 @app.route("/file/update", methods=["POST"])
-def update_file():
+def file_update():
     # A Method to update a file's data
 
     if request.method != "POST":
@@ -198,7 +198,7 @@ def update_file():
 
 
 @app.route("/file/upload", methods=["POST"])
-def upload_file():
+def file_upload():
     # Save file given into upload folder.
     files = request.files.values()
     if not files:
@@ -259,8 +259,16 @@ def show_spreadsheet_filter_popup():
 def test_file():
     try:
         files = {"file": open("test_file/test.xlsx", "rb")}
-        url = "http://127.0.0.1:5000" + url_for("upload_file")
-        response = requests.post(url, files=files)
+        upload_url = "http://127.0.0.1:5000" + url_for("file_upload")
+        response = requests.post(upload_url, files=files)
+        if "error" in response:
+            raise Exception("Saving file failed")
+
+        get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
+        response = requests.post(get_file_df, files=files)
+        if "error" in response:
+            raise Exception("Fetching file failed")
+
         return response
     except Exception as e:
         return jsonify({"error": f"Failed to load test file: {e}"})
