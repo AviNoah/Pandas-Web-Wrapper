@@ -1,5 +1,8 @@
 from flask import *
 from urllib.parse import quote
+
+from io import BytesIO
+
 import os
 import tempfile
 import pandas as pd
@@ -117,6 +120,31 @@ def get_file_df(filename) -> pd.DataFrame | None:
         ...
 
 
+def send_df(
+    df: pd.DataFrame, filename: str, sheet_name: str = "Sheet1", error: str = ""
+) -> Flask.Response:
+    try:
+        # Save the DataFrame to BytesIO using openpyxl as the engine
+        output = BytesIO()
+        df.to_excel(output, engine="openpyxl", sheet_name=sheet_name, index=False)
+        output.seek(0)  # Move to beginning of file
+
+        filename = os.path.basename(filename)
+        filename, _ = os.path.splitext()  # discard extension
+
+        return (
+            send_file(
+                output,
+                as_attachment=True,
+                download_name=f"{filename}.xlsx",
+                mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            ),
+            200,
+        )
+    except Exception as e:
+        return jsonify({f"{error}": str(e)}), 500
+
+
 # Landing page
 @app.route("/")
 def index():
@@ -144,16 +172,13 @@ def selected_file():
     selected_file_name = json_data["filename"]
 
     if request.method == "POST":
-        # Update selected file, will be sent from select_file.html
-        # TODO: add update_file method, which will rename the file
+        # Update data of selected file, will be sent from select_file.html
+        # TODO: add update_file method, which will rename the file if the file had been renamed
         return jsonify({"message": "Selected file updated successfully"}), 200
     elif request.method == "GET":
         # Get selected file
         df = get_file_df(selected_file_name)
-        if df:
-            return send_file(df.to_excel(), as_attachment=True), 200
-        else:
-            return jsonify({"error": "Selected file not found"}), 404
+        return send_df(df, selected_file_name, error="Selected file not found")
 
     else:
         return jsonify("Unsupported method"), 500
@@ -207,11 +232,8 @@ def show_spreadsheet_filter_popup():
 
 @app.route("/spreadsheet/upload/test_file")
 def test_file():
-    try:
-        df = pd.read_excel("test_file/test.xlsx")
-        return send_file(df.to_excel(), as_attachment=True), 200
-    except Exception as e:
-        return jsonify({"error": f"Unable to retrieve test file: {e}"}), 500
+    df = pd.read_excel("test_file/test.xlsx")
+    return send_df(df, "test.xlsx", error="Unable to retrieve test file")
 
 
 if __name__ == "__main__":
