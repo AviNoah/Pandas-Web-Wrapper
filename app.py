@@ -252,11 +252,6 @@ def filter_update():
     return jsonify({"error": "Method not implemented"}), 500
 
 
-@app.route("/spreadsheet/filter/popup", methods=["GET"])
-def show_spreadsheet_filter_popup():
-    return render_template("filter_popup.html")
-
-
 @app.route("/resources/<path:path>")
 def get_resource(path):
     # Serve static files from back-end
