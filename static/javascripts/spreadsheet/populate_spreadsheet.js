@@ -227,16 +227,18 @@ function adjustSpinner(sheetCount) {
 
 
 // TODO: Remove test file later
-fetch("/spreadsheet/upload/test_file")
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Test file was not retrieved');
-        }
-        return response.blob();  // Extract response as blob
-    })
-    .then(blob => {
-        openFile(blob);
-    })
-    .catch(error => {
-        console.error('Error fetching the test file:', error);
-    });
+document.addEventListener('DOMContentLoaded', function (event) {
+    fetch("/spreadsheet/upload/test_file")
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Test file was not retrieved');
+            }
+            return response.blob();  // Extract response as blob
+        })
+        .then(blob => {
+            openFile(blob);
+        })
+        .catch(error => {
+            console.error('Error fetching the test file:', error);
+        });
+});
