@@ -118,7 +118,10 @@ def get_file_df(filename) -> pd.DataFrame | None:
     for filter in file_filters:
         column, method, inp = filter["column"], filter["method"], filter["input"]
         # TODO: filter DF using given parameters
+        # df = ...
         ...
+
+    return df
 
 
 def send_df(
