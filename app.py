@@ -278,7 +278,10 @@ def test_file():
         if not fetch_response.ok:
             raise Exception("Fetching file failed")
 
-        return Response(fetch_response)
+        final_response = Response(fetch_response)
+        final_response.headers.add_header("File-Name", "test.xlsx")
+
+        return final_response
     except Exception as e:
         return jsonify({"error": f"Failed to load test file: {e}"})
 
