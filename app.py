@@ -260,17 +260,17 @@ def test_file():
     try:
         files = {"file": open("test_file/test.xlsx", "rb")}
         upload_url = "http://127.0.0.1:5000" + url_for("file_upload")
-        response = requests.post(upload_url, files=files)
-        if not response.ok:
+        upload_response = requests.post(upload_url, files=files)
+        if not upload_response.ok:
             raise Exception("Saving file failed")
 
         get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
         data = {"filename": "test.xlsx"}
-        response = requests.post(get_file_url, json=data)
-        if not response.ok:
+        fetch_response = requests.post(get_file_url, json=data)
+        if not fetch_response.ok:
             raise Exception("Fetching file failed")
 
-        return response
+        return fetch_response
     except Exception as e:
         return jsonify({"error": f"Failed to load test file: {e}"})
 
