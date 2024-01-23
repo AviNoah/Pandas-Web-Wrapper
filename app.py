@@ -1,5 +1,6 @@
 from flask import *
 from urllib.parse import quote
+import requests
 
 from io import BytesIO
 
@@ -234,7 +235,7 @@ def filters():
             200,
         )
     else:
-        jsonify({"error": "Unsupported method"}), 500
+        return jsonify({"error": "Unsupported method"}), 500
 
 
 @app.route("/spreadsheet/filter/popup", methods=["GET"])
@@ -244,8 +245,11 @@ def show_spreadsheet_filter_popup():
 
 @app.route("/spreadsheet/upload/test_file")
 def test_file():
-    df = pd.read_excel("test_file/test.xlsx")
-    return send_df(df, "test.xlsx", error="Unable to retrieve test file")
+    try:
+        files = {"file": open("test_file/test.xlsx", "rb")}
+        return requests.post(url_for("upload_file"), files=files)
+    except Exception as e:
+        return jsonify({"error": f"Failed to load test file: {e}"})
 
 
 if __name__ == "__main__":
