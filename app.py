@@ -143,7 +143,7 @@ def send_df(
             mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 
-        return response.get_wsgi_response()
+        return response
     except Exception as e:
         return jsonify({f"{error}": str(e)}), 500
 
@@ -273,7 +273,7 @@ def test_file():
         if not fetch_response.ok:
             raise Exception("Fetching file failed")
 
-        return fetch_response
+        return Response(fetch_response)
     except Exception as e:
         return jsonify({"error": f"Failed to load test file: {e}"})
 
