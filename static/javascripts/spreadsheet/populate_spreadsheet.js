@@ -186,8 +186,8 @@ function applyFilter(filename, column) {
         });
 }
 
-function openFile(file, filename = null) {
-    if (file) {
+function openFile(filePromise, filename = null) {
+    filePromise.then((file) => {
         const reader = new FileReader();
 
         reader.onload = function (event) {
@@ -215,7 +215,7 @@ function openFile(file, filename = null) {
         }
 
         reader.readAsBinaryString(file);
-    }
+    });
 }
 
 // Function to adjust the selected sheet spinner properties
@@ -238,10 +238,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
 
             const filename = response.headers.get('File-Name');
             console.log(filename);
-            return response.blob();  // Extract response as blob
+
+            return { blob: response.blob(), filename: filename };  // Extract response as blob
         })
-        .then(blob => {
-            openFile(blob);
+        .then(({ blob, filename }) => {
+            openFile(blob, filename);
         })
         .catch(error => {
             console.error('Error fetching the test file:', error);
