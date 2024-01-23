@@ -208,7 +208,6 @@ function openFile(filePromise, filename = null) {
 
                 // Save file name to sessionStorage.
                 sessionStorage.setItem('selected-file', filename);
-                console.log(sessionStorage.getItem('selected-file'))
             } catch (error) {
                 console.error("Error reading the Excel file:", error);
             }
@@ -237,7 +236,6 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 throw new Error("File name was not specified in headers");
 
             const filename = response.headers.get('File-Name');
-            console.log(filename);
 
             return { blob: response.blob(), filename: filename };  // Extract response as blob
         })
