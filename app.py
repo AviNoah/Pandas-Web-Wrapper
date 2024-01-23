@@ -134,12 +134,11 @@ def send_df(
         output.seek(0)  # Move to beginning of file
 
         filename = os.path.basename(filename)
-        filename, _ = os.path.splitext(filename)  # discard extension
 
         response = send_file(
             output,
             as_attachment=False,
-            download_name=f"{filename}.xlsx",
+            download_name=filename,
             mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 

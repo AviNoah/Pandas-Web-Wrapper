@@ -203,6 +203,10 @@ function openFile(file) {
 
                 // Adjust the spinner based on the number of sheets
                 adjustSpinner(workbook.SheetNames.length);
+
+                // Save file name to sessionStorage.
+                sessionStorage.setItem('selected-file', file.filename);
+                console.log(sessionStorage.getItem('selected-file'))
             } catch (error) {
                 console.error("Error reading the Excel file:", error);
             }
