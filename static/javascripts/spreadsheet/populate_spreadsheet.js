@@ -150,7 +150,7 @@ function addFilter(event, column) {
 
     // Set the position of the filter popup relative to the clicked filter image
     filterPopup.style.position = 'absolute';
-    filterPopup.style.left = `${rect.left + window.scrollX}px`; // Include horizontal scroll
+    filterPopup.style.right = `${window.innerWidth - (rect.left + window.scrollX)}px`; // Include horizontal scroll
     filterPopup.style.top = `${rect.bottom + window.scrollY}px`; // Include vertical scroll
     filterPopup.style.display = 'block';
 
