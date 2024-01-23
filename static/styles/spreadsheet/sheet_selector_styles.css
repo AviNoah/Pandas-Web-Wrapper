@@ -6,7 +6,7 @@ input[type="number"] {
     padding: 0;
     border: none;
     border-radius: 0;
-    background-color: transparent;
+    background-color: white;
     font-size: inherit;
 }
 
@@ -17,24 +17,16 @@ input[type="number"] {
 }
 
 /* Style the input field */
-.modern-number-input input {
+input.modern-number-input {
     width: 40px;
-    /* Set the width according to your design */
     padding: 8px;
-    border: 1px solid #ccc;
+    border: 1px solid black;
     border-radius: 4px;
     font-size: 14px;
 }
 
-/* Style the up and down arrows */
-.modern-number-input input::-webkit-inner-spin-button,
-.modern-number-input input::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-.modern-number-input input:focus {
+/* Make bolder when selected */
+input.modern-number-input:focus {
     outline: none;
-    border-color: #007bff;
-    /* Add a focus border color if needed */
+    border: 2px solid black
 }
