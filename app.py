@@ -298,9 +298,10 @@ def test_file():
             raise Exception("Fetching file failed")
 
         final_response = Response(fetch_response.content)
-        final_response.headers.extend(
-            fetch_response.headers
-        )  # Copy headers to the final response
+
+        # Copy headers to the final response
+        final_response.headers.add("Sheet-Count", fetch_response.headers["Sheet-Count"])
+        final_response.headers.add("File-Name", fetch_response.headers["File-Name"])
 
         return final_response
     except Exception as e:
