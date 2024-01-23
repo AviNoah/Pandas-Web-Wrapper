@@ -269,7 +269,7 @@ def get_template(template):
 def test_file():
     try:
         files = ["test.ods", "test.xlsx", "test.csv"]
-        file_name = files[2]
+        file_name = files[0]
         files = {"file": open(f"test_file/{file_name}", "rb")}
         upload_url = "http://127.0.0.1:5000" + url_for("file_upload")
         upload_response = requests.post(upload_url, files=files)
