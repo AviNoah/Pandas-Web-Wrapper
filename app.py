@@ -263,6 +263,12 @@ def get_resource(path):
     return send_from_directory("static", path)
 
 
+@app.route("/templates/<path:template>")
+def get_template(template):
+    # Serve template files from back-end
+    return render_template(template)
+
+
 @app.route("/spreadsheet/upload/test_file")
 def test_file():
     try:
