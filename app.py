@@ -141,7 +141,7 @@ def send_df(
             as_attachment=True,
             download_name=f"{filename}.xlsx",
             mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        )
+        ).get_wsgi_response()
 
         return response
     except Exception as e:

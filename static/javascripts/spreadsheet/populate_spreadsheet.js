@@ -193,6 +193,8 @@ function openFile(file) {
                 console.error("Error reading the Excel file:", error);
             }
         }
+
+        reader.readAsBinaryString(file);
     }
 }
 
