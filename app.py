@@ -136,15 +136,14 @@ def send_df(
         filename = os.path.basename(filename)
         filename, _ = os.path.splitext(filename)  # discard extension
 
-        return (
-            send_file(
-                output,
-                as_attachment=True,
-                download_name=f"{filename}.xlsx",
-                mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            ),
-            200,
+        response = send_file(
+            output,
+            as_attachment=True,
+            download_name=f"{filename}.xlsx",
+            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
+
+        return response, 200
     except Exception as e:
         return jsonify({f"{error}": str(e)}), 500
 
@@ -170,7 +169,7 @@ def file_get():
     # A method to get data of or update a selected file.
 
     if request.method != "GET":
-        return jsonify("Unsupported method"), 500
+        return jsonify("Unsupported method"), 405
 
     json_data = request.get_json()
     if not json_data or not "filename" in json_data:
@@ -180,7 +179,8 @@ def file_get():
 
     # Get selected file
     df = get_file_df(selected_file_name)
-    return send_df(df, selected_file_name, error="Selected file not found")
+    response = send_df(df, selected_file_name, error="Selected file not found")
+    return response
 
 
 @app.route("/file/update", methods=["POST"])
@@ -188,7 +188,7 @@ def file_update():
     # A Method to update a file's data
 
     if request.method != "POST":
-        return jsonify("Unsupported method"), 500
+        return jsonify("Unsupported method"), 405
 
     json_data = request.get_json()
     if not json_data or not "filename" in json_data:
