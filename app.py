@@ -180,7 +180,7 @@ def file_get():
 
     # Get selected file
     dfs: dict[pd.DataFrame] = get_file_df(selected_file_name)
-    df: pd.DataFrame = dfs[selected_sheet - 1]  # Adjust for 0 based indexing
+    df: pd.DataFrame = dfs[selected_sheet]
     response = send_df(df, selected_file_name, error="Selected file not found")
     return response
 
@@ -280,7 +280,7 @@ def test_file():
             raise Exception("Saving file failed")
 
         get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
-        data = {"filename": file_name}
+        data = {"filename": file_name, "sheet": 0}
         fetch_response = requests.get(get_file_url, json=data)
         if not fetch_response.ok:
             raise Exception("Fetching file failed")
