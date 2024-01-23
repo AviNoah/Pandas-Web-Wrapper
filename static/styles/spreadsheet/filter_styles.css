@@ -3,6 +3,21 @@
     --dangerous_button: rgb(233, 71, 71);
 }
 
+/* For the pop up box when filter is selected */
+.filter-popup {
+    position: absolute;
+    background-color: var(--filter_background_color);
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    display: none;
+    border-radius: 10px;
+}
+
+.filter-popup-content {
+    display: flex;
+    flex-direction: column;
+}
 
 .filter-popup-content input {
     border: 1px solid #ccc;
