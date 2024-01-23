@@ -138,12 +138,12 @@ def send_df(
 
         response = send_file(
             output,
-            as_attachment=True,
+            as_attachment=False,
             download_name=f"{filename}.xlsx",
             mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-        ).get_wsgi_response()
+        )
 
-        return response
+        return response.get_wsgi_response()
     except Exception as e:
         return jsonify({f"{error}": str(e)}), 500
 
