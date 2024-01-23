@@ -115,7 +115,6 @@ function createFilterPopup(filename, columnIndex) {
     return filterPopup;
 }
 
-
 // Function to handle closing the filter popup
 function closeFilterPopup(event) {
     const filterPopup = document.querySelector('.filter-popup');
@@ -138,7 +137,6 @@ function closeFilterPopup(event) {
     }
 }
 
-
 function addFilter(event, column) {
     // Show filter pop up at column
 
@@ -148,14 +146,15 @@ function addFilter(event, column) {
     // Get the position of the clicked filter image
     const rect = event.target.getBoundingClientRect();
 
+    let right = rect.left + scrollX
+
+    // Make sure it doesn't overflow
+    right = Math.max(250, right);
+
     // Set the position of the filter popup relative to the clicked filter image
     filterPopup.style.position = 'absolute';
-    filterPopup.style.right = `${window.innerWidth - (rect.left + window.scrollX)}px`; // Include horizontal scroll
+    filterPopup.style.right = `${window.innerWidth - right}px`; // Include horizontal scroll
     filterPopup.style.top = `${rect.bottom + window.scrollY}px`; // Include vertical scroll
-
-    // TODO: make sure this fix works
-    // Make sure it doesn't overflow
-    filterPopup.style.right = Math.min(filterPopup.style.right, window.innerWidth - filterPopup.innerWidth);
 
     filterPopup.style.display = 'block';
 
@@ -240,7 +239,6 @@ function adjustSpinner(sheetCount) {
     selectedSheetSpinner.value = 1;
     selectedSheetSpinner.max = sheetCount;
 }
-
 
 // TODO: Remove test file later
 document.addEventListener('DOMContentLoaded', function (event) {
