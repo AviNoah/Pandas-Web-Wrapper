@@ -8,7 +8,7 @@ selectedSheetSpinner.addEventListener('change', changeSheet);
 // Function to handle changes in the selected sheet spinner
 function changeSheet() {
     data = { filename: sessionStorage.getItem("File-Name"), sheet: selectedSheetSpinner.value }
-
+    // TODO: fix this fetch request
     // Make a GET request
     fetch('/file/get', {
         method: 'GET',
@@ -244,7 +244,6 @@ function openFile(filePromise, filename, sheetCount) {
 // Function to adjust the selected sheet spinner properties
 function adjustSpinner(sheetCount) {
     // Set the value to 1 and change the maximum value to sheet count
-    // TODO: fix this
     selectedSheetSpinner.value = 1;
     selectedSheetSpinner.max = sheetCount;
 }
