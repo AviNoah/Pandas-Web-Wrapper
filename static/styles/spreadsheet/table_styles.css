@@ -9,6 +9,7 @@
     /* Collapse any cell borders that touch each-other into a single border*/
     border-collapse: collapse;
     width: 100%;
+    height: 100%;
 }
 
 #spreadsheet th,
