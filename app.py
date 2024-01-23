@@ -171,9 +171,11 @@ def file_get():
     if request.method != "GET":
         return jsonify("Unsupported method"), 405
 
+    keys = {"filename", "sheet"}
+
     json_data = request.get_json()
-    if not json_data or not "filename" in json_data or not "sheet" in json_data:
-        return jsonify({"error": "JSON data doesn't contain file name or sheet"}), 500
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
     selected_sheet = json_data["sheet"]
@@ -196,9 +198,11 @@ def file_update():
     if request.method != "POST":
         return jsonify("Unsupported method"), 405
 
+    keys = {"filename", "sheet", "column", "method", "input"}
+
     json_data = request.get_json()
-    if not json_data or not "filename" in json_data or not "sheet" in json_data:
-        return jsonify({"error": "JSON data doesn't contain file name or sheet"}), 500
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
     selected_sheet = json_data["sheet"]
@@ -232,9 +236,11 @@ def filter_get():
     if request.method != "GET":
         return jsonify({"error": "Unsupported method"}), 500
 
+    keys = {"filename", "sheet"}
+
     json_data = request.get_json()
-    if not json_data or not "filename" in json_data:
-        return jsonify({"error": "JSON data doesn't contain file name"}), 500
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
     file_filters: list[dict] = get_file_filters(selected_file_name)
@@ -250,9 +256,11 @@ def filter_update():
     if request.method != "POST":
         return jsonify({"error": "Unsupported method"}), 500
 
+    keys = {"filename", "sheet"}
+
     json_data = request.get_json()
-    if not json_data or not "filename" in json_data:
-        return jsonify({"error": "JSON data doesn't contain file name"}), 500
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
     # TODO: Add update filter method

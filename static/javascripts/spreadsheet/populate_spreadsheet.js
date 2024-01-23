@@ -170,6 +170,9 @@ function addFilter(event, column) {
 }
 
 function applyFilter(filename, column) {
+    // Get selected sheet
+    const sheetNum = selectedSheetSpinner.value;
+
     // Get the selected filter type
     const selection = document.getElementById('filter_selector').value;
 
@@ -180,7 +183,7 @@ function applyFilter(filename, column) {
 
     const escapedPatternInput = escapeRegExp(patternInput);
 
-    const data = { 'filename': filename, 'column': column, 'method': selection, 'input': escapedPatternInput };
+    const data = { 'filename': filename, 'sheet': sheetNum, 'column': column, 'method': selection, 'input': escapedPatternInput };
 
     // Save new filter
     fetch("/filter/update", {
