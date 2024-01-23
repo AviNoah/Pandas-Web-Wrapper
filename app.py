@@ -258,6 +258,12 @@ def show_spreadsheet_filter_popup():
     return render_template("filter_popup.html")
 
 
+@app.route("/resources/<path:path>")
+def get_resource(path):
+    # Serve static files from back-end
+    return send_from_directory("static", path)
+
+
 @app.route("/spreadsheet/upload/test_file")
 def test_file():
     try:

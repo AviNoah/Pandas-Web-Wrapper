@@ -47,7 +47,7 @@ function updateSpreadsheetElement(sheet, editable = false) {
 
         // Design header cell
         const filterImg = document.createElement('img');
-        filterImg.src = '../static/images/filter_logo.svg';
+        filterImg.src = fetch('/resources/images/filter_logo.svg')
         filterImg.alt = 'Filter';
         filterImg.classList.add("filter");
 
