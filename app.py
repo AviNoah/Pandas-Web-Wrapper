@@ -123,7 +123,7 @@ def get_file_df(filename) -> pd.DataFrame | None:
 
 def send_df(
     df: pd.DataFrame, filename: str, sheet_name: str = "Sheet1", error: str = ""
-) -> Flask.Response:
+) -> Response:
     try:
         # Save the DataFrame to BytesIO using openpyxl as the engine
         output = BytesIO()
