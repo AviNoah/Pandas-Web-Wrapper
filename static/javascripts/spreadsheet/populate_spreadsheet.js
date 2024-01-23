@@ -152,6 +152,11 @@ function addFilter(event, column) {
     filterPopup.style.position = 'absolute';
     filterPopup.style.right = `${window.innerWidth - (rect.left + window.scrollX)}px`; // Include horizontal scroll
     filterPopup.style.top = `${rect.bottom + window.scrollY}px`; // Include vertical scroll
+
+    // TODO: make sure this fix works
+    // Make sure it doesn't overflow
+    filterPopup.style.right = Math.min(filterPopup.style.right, window.innerWidth - filterPopup.innerWidth);
+
     filterPopup.style.display = 'block';
 
     document.addEventListener('click', (event) => closeFilterPopup(event));
