@@ -76,7 +76,7 @@ function updateSpreadsheetElement(sheet, editable = false) {
         cell.appendChild(wrapperDiv);
 
         // Apply filter when the filter image is clicked
-        filterImg.addEventListener('click', () => addFilter(cell.cellIndex + 1)); // Add 1 to cellIndex to adjust for 0-based index
+        filterImg.addEventListener('click', (event) => addFilter(event, cell.cellIndex + 1)); // Add 1 to cellIndex to adjust for 0-based index
     });
 }
 
@@ -139,9 +139,21 @@ function closeFilterPopup(event) {
 }
 
 
-function addFilter(column) {
+function addFilter(event, column) {
+    // Show filter pop up at column
+    
     const filename = sessionStorage.getItem('selected-file');
-    createFilterPopup(filename, column);
+    const filterPopup = createFilterPopup(filename, column);
+
+    // Get the position of the clicked filter image
+    const rect = event.target.getBoundingClientRect();
+
+    // Set the position of the filter popup relative to the clicked filter image
+    filterPopup.style.position = 'absolute';
+    filterPopup.style.left = `${rect.left + window.scrollX}px`; // Include horizontal scroll
+    filterPopup.style.top = `${rect.bottom + window.scrollY}px`; // Include vertical scroll
+    filterPopup.style.display = 'block';
+
     document.addEventListener('click', (event) => closeFilterPopup(event));
 }
 
