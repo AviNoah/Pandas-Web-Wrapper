@@ -170,7 +170,7 @@ def file_get():
         return jsonify("Unsupported method"), 500
 
     json_data = request.get_json()
-    if not json_data or "filename" in json_data:
+    if not json_data or not "filename" in json_data:
         return jsonify({"error": "JSON data doesn't contain file name"}), 500
 
     selected_file_name = json_data["filename"]
@@ -188,7 +188,7 @@ def file_update():
         return jsonify("Unsupported method"), 500
 
     json_data = request.get_json()
-    if not json_data or "filename" in json_data:
+    if not json_data or not "filename" in json_data:
         return jsonify({"error": "JSON data doesn't contain file name"}), 500
 
     selected_file_name = json_data["filename"]
@@ -223,7 +223,7 @@ def filter_get():
         return jsonify({"error": "Unsupported method"}), 500
 
     json_data = request.get_json()
-    if not json_data or "filename" in json_data:
+    if not json_data or not "filename" in json_data:
         return jsonify({"error": "JSON data doesn't contain file name"}), 500
 
     selected_file_name = json_data["filename"]
@@ -241,7 +241,7 @@ def filter_update():
         return jsonify({"error": "Unsupported method"}), 500
 
     json_data = request.get_json()
-    if not json_data or "filename" in json_data:
+    if not json_data or not "filename" in json_data:
         return jsonify({"error": "JSON data doesn't contain file name"}), 500
 
     selected_file_name = json_data["filename"]
