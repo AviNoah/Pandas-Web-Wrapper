@@ -143,7 +143,7 @@ def send_df(
             mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         )
 
-        return response, 200
+        return response
     except Exception as e:
         return jsonify({f"{error}": str(e)}), 500
 
