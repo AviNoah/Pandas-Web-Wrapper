@@ -17,7 +17,7 @@ body {
 
 #sheetSelector {
     position: absolute;
-    opacity: 0.7;
+    opacity: 0.4;
     z-index: 2;
     transition: opacity var(--trans-opacity-duration), transform var(--trans-hover-duration);
 
