@@ -134,7 +134,7 @@ def send_df(
         output.seek(0)  # Move to beginning of file
 
         filename = os.path.basename(filename)
-        filename, _ = os.path.splitext()  # discard extension
+        filename, _ = os.path.splitext(filename)  # discard extension
 
         return (
             send_file(
