@@ -140,8 +140,7 @@ function closeFilterPopup(event) {
 
 
 function addFilter(column) {
-    //TODO: get filename
-    const filename = null
+    const filename = sessionStorage.getItem('selected-file');
     createFilterPopup(filename, column);
     document.addEventListener('click', (event) => closeFilterPopup(event));
 }
