@@ -268,7 +268,8 @@ def get_template(template):
 @app.route("/spreadsheet/upload/test_file")
 def test_file():
     try:
-        file_name = "test.ods"
+        files = ["test.ods", "test.xlsx", "test.csv"]
+        file_name = files[2]
         files = {"file": open(f"test_file/{file_name}", "rb")}
         upload_url = "http://127.0.0.1:5000" + url_for("file_upload")
         upload_response = requests.post(upload_url, files=files)
