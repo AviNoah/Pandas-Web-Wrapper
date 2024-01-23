@@ -179,7 +179,7 @@ def file_get():
     selected_sheet = json_data["sheet"]
 
     # Get selected file
-    dfs: dict[pd.DataFrame] = get_file_df(selected_file_name)
+    dfs: list[pd.DataFrame] = list(get_file_df(selected_file_name).values())
     df: pd.DataFrame = dfs[selected_sheet]
     response = send_df(df, selected_file_name, error="Selected file not found")
     return response
