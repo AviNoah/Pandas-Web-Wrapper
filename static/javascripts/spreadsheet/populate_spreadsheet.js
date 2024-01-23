@@ -47,9 +47,23 @@ function updateSpreadsheetElement(sheet, editable = false) {
 
         // Design header cell
         const filterImg = document.createElement('img');
-        filterImg.src = fetch('/resources/images/filter_logo.svg')
         filterImg.alt = 'Filter';
         filterImg.classList.add("filter");
+
+        // Fetch src
+        fetch('/resources/images/Filter.svg')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Could not retrieve filter src");
+                }
+                return response.url; // Return the URL from the response
+            })
+            .then(imageUrl => {
+                // Set the src attribute of the image element
+                filterImg.src = imageUrl;
+            })
+            .catch(error => console.error('Error fetching image:', error));
+
 
 
         const cellName = document.createTextNode(cell.textContent);

@@ -10,4 +10,6 @@
 .header-cell.wrapper.filter {
     cursor: pointer;
     margin-left: 5px;
+    height: 24px;
+    width: 24px;
 }
