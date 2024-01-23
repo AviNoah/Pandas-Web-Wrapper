@@ -1,9 +1,15 @@
+:root {
+    --background-color: rgb(253, 233, 177);
+}
+
 html,
 body {
     display: grid;
     grid-template-columns: 7fr 1fr;
     height: 100%;
     width: 100%;
+    background-color: var(--background-color);
+    ;
 }
 
 iframe {
