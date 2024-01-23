@@ -181,7 +181,11 @@ def file_get():
     # Get selected file
     dfs: list[pd.DataFrame] = list(get_file_sheets(selected_file_name).values())
     df: pd.DataFrame = dfs[selected_sheet]
+
     response = send_df(df, selected_file_name, error="Selected file not found")
+    response.headers.add("File-Name", selected_file_name)
+    response.headers.add("Sheet-Count", str(len(dfs)))
+
     return response
 
 
@@ -285,8 +289,10 @@ def test_file():
         if not fetch_response.ok:
             raise Exception("Fetching file failed")
 
-        final_response = Response(fetch_response)
-        final_response.headers.add_header("File-Name", file_name)
+        final_response = Response(fetch_response.content)
+        final_response.headers.extend(
+            fetch_response.headers
+        )  # Copy headers to the final response
 
         return final_response
     except Exception as e:

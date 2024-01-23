@@ -209,7 +209,7 @@ function applyFilter(filename, column) {
         });
 }
 
-function openFile(filePromise, filename = null) {
+function openFile(filePromise, filename, sheetCount) {
     filePromise.then((file) => {
         const reader = new FileReader();
 
@@ -225,9 +225,7 @@ function openFile(filePromise, filename = null) {
                 updateSpreadsheetElement(sheet);
 
                 // Adjust the spinner based on the number of sheets
-                adjustSpinner(workbook.SheetNames.length);
-
-                if (!filename) filename = file.filename;  // Fall back if not given filename
+                adjustSpinner(sheetCount);
 
                 // Save file name to sessionStorage.
                 sessionStorage.setItem('selected-file', filename);
@@ -259,11 +257,12 @@ document.addEventListener('DOMContentLoaded', function (event) {
                 throw new Error("File name was not specified in headers");
 
             const filename = response.headers.get('File-Name');
+            const sheetCount = response.headers.get('Sheet-Count');
 
-            return { blob: response.blob(), filename: filename };  // Extract response as blob
+            return { blob: response.blob(), filename: filename, sheetCount: sheetCount };  // Extract response as blob
         })
-        .then(({ blob, filename }) => {
-            openFile(blob, filename);
+        .then(({ blob, filename, sheetCount }) => {
+            openFile(blob, filename, sheetCount);
         })
         .catch(error => {
             console.error('Error fetching the test file:', error);
