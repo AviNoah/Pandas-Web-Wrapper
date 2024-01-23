@@ -97,7 +97,7 @@ def get_file_filters(filename) -> list[dict]:
     return json_data
 
 
-def get_file_df(filename) -> dict[pd.DataFrame] | None:
+def get_file_sheets(filename) -> dict[pd.DataFrame] | None:
     # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
     # run all the filters saved in its folder on it before returning.
     # If filename doesn't exist in UPLOAD FOLDER return None.
@@ -179,7 +179,7 @@ def file_get():
     selected_sheet = json_data["sheet"]
 
     # Get selected file
-    dfs: list[pd.DataFrame] = list(get_file_df(selected_file_name).values())
+    dfs: list[pd.DataFrame] = list(get_file_sheets(selected_file_name).values())
     df: pd.DataFrame = dfs[selected_sheet]
     response = send_df(df, selected_file_name, error="Selected file not found")
     return response
