@@ -261,12 +261,12 @@ def test_file():
         files = {"file": open("test_file/test.xlsx", "rb")}
         upload_url = "http://127.0.0.1:5000" + url_for("file_upload")
         response = requests.post(upload_url, files=files)
-        if "error" in response:
+        if not response.ok:
             raise Exception("Saving file failed")
 
         get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
         response = requests.post(get_file_url, files=files)
-        if "error" in response:
+        if not response.ok:
             raise Exception("Fetching file failed")
 
         return response
