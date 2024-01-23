@@ -233,6 +233,11 @@ document.addEventListener('DOMContentLoaded', function (event) {
             if (!response.ok) {
                 throw new Error('Test file was not retrieved');
             }
+            if (!response.headers.has('File-Name'))
+                throw new Error("File name was not specified in headers");
+
+            const filename = response.headers.get('File-Name');
+            console.log(filename);
             return response.blob();  // Extract response as blob
         })
         .then(blob => {
