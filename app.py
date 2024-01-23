@@ -164,7 +164,7 @@ def show_spreadsheet():
     return render_template("spreadsheet_view.html")
 
 
-@app.route("/file/get", methods=["POST", "GET"])
+@app.route("/file/get", methods=["GET"])
 def file_get():
     # A method to get data of or update a selected file.
 
