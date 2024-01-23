@@ -215,27 +215,39 @@ def upload_file():
         return jsonify({"error": "File saving was unsuccessful"}), 500
 
 
-@app.route("/spreadsheet/filter", methods=["POST", "GET"])
-def filters():
-    # Either GET or UPDATE the filters of the given file.
+@app.route("/filter/get", methods=["GET"])
+def filter_get():
+    # Get the filters of the selected file.
+
+    if request.method != "GET":
+        return jsonify({"error": "Unsupported method"}), 500
 
     json_data = request.get_json()
     if not json_data or "filename" in json_data:
         return jsonify({"error": "JSON data doesn't contain file name"}), 500
 
     selected_file_name = json_data["filename"]
+    file_filters: list[dict] = get_file_filters(selected_file_name)
+    return (
+        jsonify({"message": "Filters read successfully", "filters": file_filters}),
+        200,
+    )
 
-    if request.method == "POST":
-        # TODO: implement a set_file_filters method
-        ...
-    elif request.method == "GET":
-        file_filters: list[dict] = get_file_filters(selected_file_name)
-        return (
-            jsonify({"message": "Filters read successfully", "filters": file_filters}),
-            200,
-        )
-    else:
+
+@app.route("/filter/update", methods=["POST"])
+def filter_update():
+    # Update the filters of the selected file
+    if request.method != "POST":
         return jsonify({"error": "Unsupported method"}), 500
+
+    json_data = request.get_json()
+    if not json_data or "filename" in json_data:
+        return jsonify({"error": "JSON data doesn't contain file name"}), 500
+
+    selected_file_name = json_data["filename"]
+    # TODO: Add update filter method
+
+    return jsonify({"error": "Method not implemented"}), 500
 
 
 @app.route("/spreadsheet/filter/popup", methods=["GET"])
