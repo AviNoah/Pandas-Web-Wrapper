@@ -268,20 +268,21 @@ def get_template(template):
 @app.route("/spreadsheet/upload/test_file")
 def test_file():
     try:
-        files = {"file": open("test_file/test.xlsx", "rb")}
+        file_name = "test.ods"
+        files = {"file": open(f"test_file/{file_name}", "rb")}
         upload_url = "http://127.0.0.1:5000" + url_for("file_upload")
         upload_response = requests.post(upload_url, files=files)
         if not upload_response.ok:
             raise Exception("Saving file failed")
 
         get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
-        data = {"filename": "test.xlsx"}
+        data = {"filename": file_name}
         fetch_response = requests.get(get_file_url, json=data)
         if not fetch_response.ok:
             raise Exception("Fetching file failed")
 
         final_response = Response(fetch_response)
-        final_response.headers.add_header("File-Name", "test.xlsx")
+        final_response.headers.add_header("File-Name", file_name)
 
         return final_response
     except Exception as e:
