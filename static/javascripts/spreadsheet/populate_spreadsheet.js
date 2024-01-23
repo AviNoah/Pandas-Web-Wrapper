@@ -186,7 +186,7 @@ function applyFilter(filename, column) {
         });
 }
 
-function openFile(file) {
+function openFile(file, filename = null) {
     if (file) {
         const reader = new FileReader();
 
@@ -204,8 +204,10 @@ function openFile(file) {
                 // Adjust the spinner based on the number of sheets
                 adjustSpinner(workbook.SheetNames.length);
 
+                if (!filename) filename = file.filename;  // Fall back if not given filename
+
                 // Save file name to sessionStorage.
-                sessionStorage.setItem('selected-file', file.filename);  //TODO: make sure it saves this
+                sessionStorage.setItem('selected-file', filename);
                 console.log(sessionStorage.getItem('selected-file'))
             } catch (error) {
                 console.error("Error reading the Excel file:", error);
