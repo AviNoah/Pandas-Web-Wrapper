@@ -6,7 +6,8 @@
     <title>Select file</title>
   </head>
   <body>
-    <p>Select a file here</p>
-    <small>you will see a grid to select files here</small>
+    <!-- The folder that will contain the file views and allow dragging files to it. -->
+    <div class="folder" id="drop-zone"></div>
+    <script src="{{ url_for('static', filename = 'javascripts/select_file/file_drop_handler.js') }}"></script>
   </body>
 </html>
