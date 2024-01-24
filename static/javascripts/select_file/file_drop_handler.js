@@ -24,14 +24,15 @@ function handleDrop(e) {
     }
 }
 
+function getFileExtension(filename) {
+    const parts = filename.split('.');
+    return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : '';
+}
+
 function isValidFile(filename) {
     const allowedExtensions = [".xlsx", ".ods", ".csv"];
-
-    // Get the file extension
-    const fileExtension = filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
-
-    // Check if the file extension is in the list of allowed extensions
-    return allowedExtensions.includes("." + fileExtension.toLowerCase());
+    const fileExtension = getFileExtension(filename);
+    return allowedExtensions.includes(fileExtension);
 }
 
 function handleDroppedFiles(event) {
