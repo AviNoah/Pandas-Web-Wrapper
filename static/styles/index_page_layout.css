@@ -4,12 +4,15 @@
 
 html,
 body {
-    display: grid;
-    grid-template-columns: 7fr 1fr;
     height: 100%;
     width: 100%;
     background-color: var(--background-color);
     overflow-y: hidden;
+}
+
+body {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
 }
 
 iframe {
