@@ -24,12 +24,26 @@ function handleDrop(e) {
     }
 }
 
+function isValidFile(filename) {
+    const allowedExtensions = [".xlsx", ".ods", ".csv"];
+
+    // Get the file extension
+    const fileExtension = filename.slice(((filename.lastIndexOf(".") - 1) >>> 0) + 2);
+
+    // Check if the file extension is in the list of allowed extensions
+    return allowedExtensions.includes("." + fileExtension.toLowerCase());
+}
+
 function handleDroppedFiles(event) {
-    const files = Array.from(event.dataTransfer.files);
+    let files = Array.from(event.dataTransfer.files);
+
+    files = files.filter((file) => isValidFile(file.filename))  // Drop files with invalid extensions
 
     // Create a FormData object
     const formData = new FormData();
-    files.forEach((file, index) => formData.append(`file${index}`, file));
+    files.forEach((file, index) => {
+        formData.append(`file${index}`, file)
+    });
 
     fetch('/file/upload', {
         method: 'POST',
