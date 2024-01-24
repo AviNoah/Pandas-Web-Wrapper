@@ -21,9 +21,9 @@ function changeSheet() {
             throw new Error('Network response was not ok');
         }
 
-        return response.arrayBuffer();  // Extract response as arrayBuffer
-    }).then(buffer => {
-        const data = new Uint8Array(buffer);
+        return response.blob();  // Extract response as blob
+    }).then(blob => {
+        const data = new Uint8Array(blob);
         const workbook = XLSX.read(data, { type: 'binary' });
 
         // Adjust for 0-based index
@@ -34,7 +34,7 @@ function changeSheet() {
 
         // Update the spreadsheet element
         updateSpreadsheetElement(sheet);
-    }).catch(error => console.error("Error while parsing selected workbook :", error))
+    }).catch(error => console.error("Error while parsing selected workbook :", error));
 }
 
 function updateSpreadsheetElement(sheet, editable = false) {
