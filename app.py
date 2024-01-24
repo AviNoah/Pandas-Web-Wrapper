@@ -164,11 +164,11 @@ def show_spreadsheet():
     return render_template("spreadsheet/spreadsheet_view.html")
 
 
-@app.route("/file/get", methods=["GET"])
+@app.route("/file/get", methods=["POST"])
 def file_get():
     # A method to get data of or update a selected file.
 
-    if request.method != "GET":
+    if request.method != "POST":
         return jsonify("Unsupported method"), 405
 
     keys = {"filename", "sheet"}
@@ -231,11 +231,11 @@ def file_upload():
         return jsonify({"error": "File saving was unsuccessful"}), 500
 
 
-@app.route("/filter/get", methods=["GET"])
+@app.route("/filter/get", methods=["POST"])
 def filter_get():
     # Get the filters of the selected file.
 
-    if request.method != "GET":
+    if request.method != "POST":
         return jsonify({"error": "Unsupported method"}), 500
 
     keys = {"filename", "sheet"}

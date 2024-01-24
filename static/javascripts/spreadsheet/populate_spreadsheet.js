@@ -7,7 +7,7 @@ selectedSheetSpinner.addEventListener('change', changeSheet);
 
 // Function to handle changes in the selected sheet spinner
 function changeSheet() {
-    data = { filename: sessionStorage.getItem("File-Name"), sheet: selectedSheetSpinner.value }
+    data = { filename: sessionStorage.getItem("selected-file"), sheet: selectedSheetSpinner.value }
     // TODO: fix this fetch request
     // Make a GET request
     fetch('/file/get', {
