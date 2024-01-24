@@ -53,7 +53,7 @@ function handleDroppedFiles(event) {
 
     Promise.all(filePromises)
         .then(() => {
-            console.log(formData);
+            console.log(formData.getAll("files"));
 
             return fetch('/file/upload', {
                 method: 'POST',
