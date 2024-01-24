@@ -29,37 +29,14 @@ function handleDroppedFiles(event) {
 
     // Create a FormData object
     const formData = new FormData();
+    files.forEach(file => formData.append("files", file));
 
-    // Keep track of file reading with Promises array
-    const filePromises = files.map(file =>
-        new Promise((resolve, reject) => {
-            const reader = new FileReader();
+    console.log(formData.getAll("files"));
 
-            reader.onload = (event) => {
-                const blob = new Blob([event.target.result]);
-
-                formData.append('files', blob, file.name);
-
-                resolve();
-            };
-
-            reader.onerror = (error) => {
-                reject(error);
-            };
-
-            reader.readAsArrayBuffer(file);
-        })
-    );
-
-    Promise.all(filePromises)
-        .then(() => {
-            console.log(formData.getAll("files"));
-
-            return fetch('/file/upload', {
-                method: 'POST',
-                body: formData,
-            });
-        })
+    fetch('/file/upload', {
+        method: 'POST',
+        body: formData,
+    })
         .then(response => {
             if (response.ok) {
                 console.log('Files added successfully');
