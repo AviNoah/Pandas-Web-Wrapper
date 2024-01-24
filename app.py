@@ -231,6 +231,7 @@ def file_upload():
         return jsonify({"error": "File saving was unsuccessful"}), 500
 
 
+# TODO: work on filters
 @app.route("/filter/get", methods=["POST"])
 def filter_get():
     # Get the filters of the selected file.
