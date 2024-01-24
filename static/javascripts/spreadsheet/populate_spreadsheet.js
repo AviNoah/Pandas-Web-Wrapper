@@ -8,8 +8,7 @@ selectedSheetSpinner.addEventListener('change', changeSheet);
 // Function to handle changes in the selected sheet spinner
 function changeSheet() {
     data = { filename: sessionStorage.getItem("selected-file"), sheet: selectedSheetSpinner.value }
-    // TODO: fix this fetch request
-    // Make a GET request
+    
     fetch('/file/get', {
         method: 'POST',
         headers: {
@@ -29,10 +28,7 @@ function changeSheet() {
             const data = event.target.result;
             const workbook = XLSX.read(data, { type: 'binary' });
 
-            // Adjust for 0-based index
-            const sheetIndex = selectedSheetSpinner.value - 1;
-
-            const sheetName = workbook.SheetNames[sheetIndex];
+            const sheetName = workbook.SheetNames[0];  // /file/get returns only one sheet.
             const sheet = workbook.Sheets[sheetName];
 
             // Update the spreadsheet element
