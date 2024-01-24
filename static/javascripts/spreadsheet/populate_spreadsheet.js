@@ -21,19 +21,27 @@ function changeSheet() {
             throw new Error('Network response was not ok');
         }
 
-        return response.blob();  // Extract response as blob
+        return response.blob();  // Return the response as a blob
     }).then(blob => {
-        const data = new Uint8Array(blob);
-        const workbook = XLSX.read(data, { type: 'binary' });
+        reader = new FileReader();
 
-        // Adjust for 0-based index
-        const sheetIndex = selectedSheetSpinner.value - 1;
+        reader.onload = function (event) {
+            const data = event.target.result;
+            const workbook = XLSX.read(data, { type: 'binary' });
 
-        const sheetName = workbook.SheetNames[sheetIndex];
-        const sheet = workbook.Sheets[sheetName];
+            // Adjust for 0-based index
+            const sheetIndex = selectedSheetSpinner.value - 1;
 
-        // Update the spreadsheet element
-        updateSpreadsheetElement(sheet);
+            const sheetName = workbook.SheetNames[sheetIndex];
+            const sheet = workbook.Sheets[sheetName];
+
+            // Update the spreadsheet element
+            updateSpreadsheetElement(sheet);
+        }
+
+        reader.readAsBinaryString(blob);
+        // Return a Promise to maintain the asynchronous behavior
+        return Promise.resolve("Changed sheet successfully");
     }).catch(error => console.error("Error while parsing selected workbook :", error));
 }
 
