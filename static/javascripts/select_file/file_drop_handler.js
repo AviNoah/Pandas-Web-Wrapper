@@ -29,9 +29,7 @@ function handleDroppedFiles(event) {
 
     // Create a FormData object
     const formData = new FormData();
-    files.forEach(file => formData.append("files", file));
-
-    console.log(formData.getAll("files"));
+    files.forEach((file, index) => formData.append(`file${index}`, file));
 
     fetch('/file/upload', {
         method: 'POST',
