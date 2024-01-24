@@ -11,7 +11,7 @@ function changeSheet() {
     // TODO: fix this fetch request
     // Make a GET request
     fetch('/file/get', {
-        method: 'GET',
+        method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
