@@ -214,11 +214,12 @@ def file_update():
 @app.route("/file/upload", methods=["POST"])
 def file_upload():
     # Save file given into upload folder.
-    files = request.files.values()
+    files = list(request.files.values())
+
     if not files:
         return jsonify({"message": "No files to add were supplied"}), 200
 
-    files = filter(lambda file: is_valid_ext(file.filename), files)
+    files = list(filter(lambda file: is_valid_ext(file.filename), files))
 
     try:
         for file in files:
