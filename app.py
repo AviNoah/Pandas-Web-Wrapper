@@ -222,7 +222,8 @@ def file_upload():
 
     try:
         for file in files:
-            save_file(file)
+            path = save_file(file)
+            print(f"Saved to {path}")
 
         return jsonify({"message": "Files saved successfully"}), 200
     except Exception:
