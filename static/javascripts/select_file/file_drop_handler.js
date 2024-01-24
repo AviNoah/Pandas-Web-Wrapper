@@ -38,9 +38,9 @@ function isValidFile(filename) {
 }
 
 function handleDroppedFiles(event) {
-    let files = Array.from(event.dataTransfer.files);
+    const droppedFiles = Array.from(event.dataTransfer.files);
 
-    files = files.filter((file) => { isValidFile(file.name) })  // Drop files with invalid extensions
+    const files = droppedFiles.filter((file) => { isValidFile(file.name) })  // Drop files with invalid extensions
 
     // Create a FormData object
     const formData = new FormData();
