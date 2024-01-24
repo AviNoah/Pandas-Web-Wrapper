@@ -30,17 +30,18 @@ function getFileExtension(filename) {
 }
 
 function isValidFile(filename) {
-    const allowedExtensions = [".xlsx", ".ods", ".csv"];
+    const allowedExtensions = ["xlsx", "ods", "csv"];
     if (!filename)
         return false;  // Empty or undefined is invalid
     const fileExtension = getFileExtension(filename);
-    return allowedExtensions.includes(fileExtension);
+    return Boolean(allowedExtensions.includes(fileExtension));
 }
 
 function handleDroppedFiles(event) {
     const droppedFiles = Array.from(event.dataTransfer.files);
 
-    const files = droppedFiles.filter((file) => { isValidFile(file.name) })  // Drop files with invalid extensions
+    // Drop files with invalid extensions
+    const files = Array.from(droppedFiles.filter((file) => isValidFile(file.name)));
 
     // Create a FormData object
     const formData = new FormData();
