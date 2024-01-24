@@ -297,7 +297,7 @@ def test_file():
             raise Exception("Saving file failed")
 
         get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
-        data = {"filename": file_name, "sheet": 0}
+        data = {"filename": file_name, "sheet": 1}
         fetch_response = requests.post(get_file_url, json=data)
         if not fetch_response.ok:
             raise Exception("Fetching file failed")
