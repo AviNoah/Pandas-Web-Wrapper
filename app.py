@@ -178,7 +178,7 @@ def file_get():
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
-    selected_sheet = json_data["sheet"]
+    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
 
     # Get selected file
     dfs: list[pd.DataFrame] = list(get_file_sheets(selected_file_name).values())
@@ -205,7 +205,7 @@ def file_update():
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
-    selected_sheet = json_data["sheet"]
+    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
 
     # TODO: Allow renaming file and updating {excel file's contents} <- check if needing the ability to edit is needed
     return jsonify({"message": "Selected file updated successfully"}), 200
@@ -245,6 +245,8 @@ def filter_get():
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
+    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
+
     file_filters: list[dict] = get_file_filters(selected_file_name)
     return (
         jsonify({"message": "Filters read successfully", "filters": file_filters}),
@@ -265,6 +267,7 @@ def filter_update():
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
+    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
     # TODO: Add update filter method
 
     return jsonify({"error": "Method not implemented"}), 500
