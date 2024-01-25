@@ -7,7 +7,7 @@ selectedSheetSpinner.addEventListener('change', changeSheet);
 
 // Function to handle changes in the selected sheet spinner
 function changeSheet() {
-    data = { filename: sessionStorage.getItem("selected-file"), sheet: selectedSheetSpinner.value }
+    data = { filename: sessionStorage.getItem("selected-file"), sheet: getSelectedSheetIndex() }
 
     fetch('/file/get', {
         method: 'POST',
@@ -175,7 +175,7 @@ function addFilter(event, column) {
 
 function applyFilter(filename, column) {
     // Get selected sheet
-    const sheetNum = selectedSheetSpinner.value - 1;  // Adjust for 0 based indexing
+    const sheetNum = getSelectedSheetIndex();
 
     // Get the selected filter type
     const selection = document.getElementById('filter_selector').value;
@@ -251,6 +251,10 @@ function adjustSpinner(sheetCount) {
     // Set the value to 1 and change the maximum value to sheet count
     selectedSheetSpinner.value = 1;
     selectedSheetSpinner.max = sheetCount;
+}
+
+function getSelectedSheetIndex() {
+    return selectedSheetSpinner.value - 1;  // Adjust for 0-based indexing
 }
 
 // TODO: Remove test file later
