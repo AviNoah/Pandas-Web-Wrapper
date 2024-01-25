@@ -98,7 +98,7 @@ function escapeRegExp(string) {
 }
 
 // Function to create a filter popup element
-function createFilterPopup(filename, columnIndex) {
+function createFilterPopup(filename, column) {
     // Check if a filter popup already exists and remove it
     const existingPopup = document.querySelector('.filter-popup');
     if (existingPopup) {
@@ -121,7 +121,7 @@ function createFilterPopup(filename, columnIndex) {
             document.body.appendChild(filterPopup);
 
             // Make the filter submit button run process_input every time it is clicked
-            document.getElementById('filter_submit_button').addEventListener('click', () => applyFilter(filename, columnIndex));
+            document.getElementById('filter_submit_button').addEventListener('click', () => applyFilter(filename, column));
         }).catch(error => console.error(error))
 
     return filterPopup;
