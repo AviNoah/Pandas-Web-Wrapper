@@ -3,13 +3,10 @@ const folderDiv = document.getElementById("drop-zone")
 
 export function addFiles(files) {
     // Add files to the folders div
-    files.forEach((file) => {
-        const fileView = addFileView(file);
-        folderDiv.appendChild(fileView);
-    })
+    files.forEach((file) => addFileView(folderDiv, file));
 }
 
-function addFileView(file) {
+function addFileView(container, file) {
     const fileViewDiv = document.createElement('div');
 
     // Make file-view
@@ -27,7 +24,7 @@ function addFileView(file) {
             const paragraphDiv = fileViewDiv.querySelector('p');
             paragraphDiv.textContent = file.name;
 
-            return fileViewDiv
+            container.appendChild(fileViewDiv);
         })
         .catch(error => console.error(error));
 }
