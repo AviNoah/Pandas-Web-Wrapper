@@ -144,15 +144,20 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
         # TODO: Handle dropping columns too as a "hide" method
 
         # method can be exact, contains, not contains or regex
-        regex_input = inp  # Default to regex
         if meth == "exact":
-            regex_input = f"^{re.escape(inp)}$"
+            # Filter rows where the column values exactly match the input string
+            df = df[df[column_name].str.fullmatch(inp)]
         elif meth == "contains":
-            regex_input = re.escape(inp)
+            # Filter rows where the column values contain the input string
+            df = df[df[column_name].str.contains(inp)]
         elif meth == "not contains":
-            regex_input = r"^(?!.*" + re.escape(inp) + r").*$"
-
-        df: pd.DataFrame = df.filter(regex=f"^{column_name}|{regex_input}", axis=1)
+            # Filter rows where the column values do not contain the input string
+            df = df[~df[column_name].str.contains(inp)]
+        elif meth == "regex":
+            # Filter rows where the column values match the regex pattern
+            df = df[df[column_name].str.match(inp)]
+        else:
+            raise ValueError("Unsupported method")
 
     return df
 
