@@ -220,7 +220,7 @@ def file_get():
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
-    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
+    selected_sheet: int = int(json_data["sheet"])
 
     # Get selected file
     sheet_count: int = get_sheet_count(selected_file_name)
@@ -247,7 +247,7 @@ def file_update():
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
-    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
+    selected_sheet: int = int(json_data["sheet"])
 
     # TODO: Allow renaming file and updating {excel file's contents} <- check if needing the ability to edit is needed
     return jsonify({"message": "Selected file updated successfully"}), 200
@@ -287,7 +287,7 @@ def filter_get():
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
-    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
+    selected_sheet: int = int(json_data["sheet"])
 
     file_filters: list[dict] = get_file_filters(
         selected_file_name, selected_sheet, include_disabled=True
@@ -347,7 +347,7 @@ def test_file():
             raise Exception("Saving file failed")
 
         get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
-        data = {"filename": file_name, "sheet": 1}
+        data = {"filename": file_name, "sheet": 0}
         fetch_response = requests.post(get_file_url, json=data)
         if not fetch_response.ok:
             raise Exception("Fetching file failed")

@@ -175,7 +175,7 @@ function addFilter(event, column) {
 
 function applyFilter(filename, column) {
     // Get selected sheet
-    const sheetNum = selectedSheetSpinner.value;
+    const sheetNum = selectedSheetSpinner.value - 1;  // Adjust for 0 based indexing
 
     // Get the selected filter type
     const selection = document.getElementById('filter_selector').value;
