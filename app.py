@@ -124,6 +124,7 @@ def get_file_sheets(filename) -> dict[pd.DataFrame]:
 
 
 def get_sheet(filename, sheet) -> pd.DataFrame:
+    # Get the sheet with its filters applied
     sheets: list[pd.DataFrame] = list(get_file_sheets(filename).values())
     filters: list[dict] = get_file_filters(filename, sheet)
 
@@ -134,6 +135,7 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
         # Apply filters
         col, meth, inp = filter["column"], filter["method"], filter["input"]
         # TODO: Handle dropping columns too as a "hide" method
+        # TODO: add an Enable/Disable option, this will filter out all disabled filters
         # method can be exact, contains, not contains or regex
         ...
 
