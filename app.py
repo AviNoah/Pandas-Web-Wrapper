@@ -98,9 +98,6 @@ def get_file_filters(filename, sheet) -> list[dict]:
     except json.JSONDecodeError as e:
         raise Exception(f"Failed decoding JSON from {json_path}: {e}")
 
-    # json_data is a list of filters, each filter contains these keys: column, method, input.
-    return json_data
-
 
 def get_file_sheets(filename) -> dict[pd.DataFrame]:
     # Return a pandas data frame of the filename stored in the UPLOAD FOLDER

@@ -8,7 +8,7 @@ selectedSheetSpinner.addEventListener('change', changeSheet);
 // Function to handle changes in the selected sheet spinner
 function changeSheet() {
     data = { filename: sessionStorage.getItem("selected-file"), sheet: selectedSheetSpinner.value }
-    
+
     fetch('/file/get', {
         method: 'POST',
         headers: {
@@ -187,7 +187,8 @@ function applyFilter(filename, column) {
 
     const escapedPatternInput = escapeRegExp(patternInput);
 
-    const data = { 'filename': filename, 'sheet': sheetNum, 'column': column, 'method': selection, 'input': escapedPatternInput };
+    // by default make it enabled because it has been added from the spreadsheet view
+    const data = { 'filename': filename, 'sheet': sheetNum, 'column': column, 'method': selection, 'input': escapedPatternInput, 'enabled': true };
 
     // Save new filter
     fetch("/filter/update", {
