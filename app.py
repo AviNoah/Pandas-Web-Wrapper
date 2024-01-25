@@ -103,7 +103,7 @@ def get_file_filters(filename, sheet) -> list[dict]:
 
 
 def get_file_sheets(filename) -> dict[pd.DataFrame]:
-    # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
+    # Return a dictionary of sheets as pandas data frame of the filename stored in the UPLOAD FOLDER
     
     file_path = get_file_path(filename)
     if not file_path:
