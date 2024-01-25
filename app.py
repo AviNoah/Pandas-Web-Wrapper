@@ -102,13 +102,13 @@ def get_file_filters(filename, sheet) -> list[dict]:
     return json_data
 
 
-def get_file_sheets(filename) -> dict[pd.DataFrame] | None:
+def get_file_sheets(filename) -> dict[pd.DataFrame]:
     # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
     # run all the filters saved in its folder on it before returning.
     # If filename doesn't exist in UPLOAD FOLDER return None.
     file_path = get_file_path(filename)
     if not file_path:
-        return None
+        raise Exception(f"{filename} doesn't exist")
 
     _, ext = os.path.splitext(filename)
 
@@ -117,14 +117,23 @@ def get_file_sheets(filename) -> dict[pd.DataFrame] | None:
         df: dict[pd.DataFrame] = readers[ext](file_path, sheet_name=None)
     except IOError as e:
         raise Exception(f"Failed reading from {file_path}: {e}")
+    except KeyError as e:
+        raise Exception(f"File type {ext} is not supported")
 
-    file_filters: list[dict] = get_file_filters(filename)
+    return df
 
-    # json_data is a list of filters, each filter contains these keys: column, method, input.
-    for filter in file_filters:
-        column, method, inp = filter["column"], filter["method"], filter["input"]
-        # TODO: filter DF using given parameters
-        # df = ...
+
+def get_sheet(filename, sheet) -> pd.DataFrame:
+    sheets: list[pd.DataFrame] = list(get_file_sheets(filename).values())
+    filters: list[dict] = get_file_filters(filename, sheet)
+
+    df = sheets[sheet]
+
+    # each filter contains these keys: column, method, input.
+    for filter in filters:
+        # Apply filters
+        col, meth, inp = filter["column"], filter["method"], filter["input"]
+        # method can be exact, contains, not contains or regex
         ...
 
     return df
