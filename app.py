@@ -133,6 +133,7 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
     for filter in filters:
         # Apply filters
         col, meth, inp = filter["column"], filter["method"], filter["input"]
+        # TODO: Handle dropping columns too as a "hide" method
         # method can be exact, contains, not contains or regex
         ...
 
