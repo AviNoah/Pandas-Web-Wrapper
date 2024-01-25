@@ -7,7 +7,7 @@ from io import BytesIO
 import os
 import tempfile
 import pandas as pd
-import re
+
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
