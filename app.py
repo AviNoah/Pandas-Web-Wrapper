@@ -146,16 +146,16 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
         # method can be exact, contains, not contains or regex
         if meth == "exact":
             # Filter rows where the column values exactly match the input string
-            df = df[df[column_name].str.fullmatch(inp)]
+            df = df[df[column_name].astype(str).eq(inp)]
         elif meth == "contains":
             # Filter rows where the column values contain the input string
-            df = df[df[column_name].str.contains(inp)]
+            df = df[df[column_name].astype(str).str.contains(inp)]
         elif meth == "not contains":
             # Filter rows where the column values do not contain the input string
-            df = df[~df[column_name].str.contains(inp)]
+            df = df[~df[column_name].astype(str).str.contains(inp)]
         elif meth == "regex":
             # Filter rows where the column values match the regex pattern
-            df = df[df[column_name].str.match(inp)]
+            df = df[df[column_name].astype(str).str.match(inp)]
         else:
             raise ValueError("Unsupported method")
 
