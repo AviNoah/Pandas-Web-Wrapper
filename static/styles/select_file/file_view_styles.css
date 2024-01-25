@@ -1,0 +1,23 @@
+.file-view {
+    display: flex;
+    flex-direction: row;
+}
+
+.data-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.text-container {
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    margin-bottom: auto;
+}
+
+.buttons-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: auto;
+}
