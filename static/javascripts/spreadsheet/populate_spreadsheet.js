@@ -88,7 +88,7 @@ function updateSpreadsheetElement(sheet, editable = false) {
         cell.appendChild(wrapperDiv);
 
         // Apply filter when the filter image is clicked
-        filterImg.addEventListener('click', (event) => addFilter(event, cell.cellIndex + 1)); // Add 1 to cellIndex to adjust for 0-based index
+        filterImg.addEventListener('click', (event) => addFilter(event, cell.cellIndex));  // cellIndex is 0-based
     });
 }
 
