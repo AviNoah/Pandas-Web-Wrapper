@@ -91,8 +91,11 @@ def get_file_filters(filename, sheet) -> list[dict]:
         with open(json_path, "r") as file:
             json_data: list[dict] = json.load(file)
 
+        # Keep only enabled and ones that apply to the selected sheet
         filters: list[dict] = list(
-            filter(lambda filter: filter["sheet"] == sheet, json_data)
+            filter(
+                lambda filter: filter["sheet"] == sheet and filter["enabled"], json_data
+            )
         )
         return filters
     except json.JSONDecodeError as e:
@@ -296,7 +299,7 @@ def filter_update():
     if request.method != "POST":
         return jsonify({"error": "Unsupported method"}), 500
 
-    keys = {"filename", "sheet", "column", "method", "input"}
+    keys = {"filename", "sheet", "column", "method", "input", "enabled"}
 
     json_data = request.get_json()
     if not json_data or not keys.issubset(json_data.keys()):
