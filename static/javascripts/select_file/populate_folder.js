@@ -10,18 +10,24 @@ export function addFiles(files) {
 }
 
 function addFileView(file) {
+    const fileViewDiv = document.createElement('div');
+
     // Make file-view
     fetch("/templates/select_file/file_view.html")
         .then(response => {
             if (!response.ok)
                 throw new console.error("Failed fetching file view template");
 
-            return response;
+            return response.text();
         })
-        .then(() => {
+        .then((content) => {
+            fileViewDiv.innerHTML = content;
+
             // Update file name
-            const filename = file.name;
-            // TODO: update p tag's textContent with filename
+            const paragraphDiv = fileViewDiv.querySelector('p');
+            paragraphDiv.textContent = file.name;
+
+            return fileViewDiv
         })
         .catch(error => console.error(error));
 }
