@@ -225,7 +225,7 @@ def file_get():
 
     response = send_df(df, selected_file_name, error="Selected file not found")
     response.headers.add("File-Name", selected_file_name)
-    response.headers.add("Sheet-Count", str(sheet_count)))
+    response.headers.add("Sheet-Count", str(sheet_count))
 
     return response
 
