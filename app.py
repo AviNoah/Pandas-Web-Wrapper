@@ -104,8 +104,7 @@ def get_file_filters(filename, sheet) -> list[dict]:
 
 def get_file_sheets(filename) -> dict[pd.DataFrame]:
     # Return a pandas data frame of the filename stored in the UPLOAD FOLDER
-    # run all the filters saved in its folder on it before returning.
-    # If filename doesn't exist in UPLOAD FOLDER return None.
+    
     file_path = get_file_path(filename)
     if not file_path:
         raise Exception(f"{filename} doesn't exist")
