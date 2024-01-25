@@ -125,6 +125,23 @@ def get_file_sheets(filename) -> dict[pd.DataFrame] | None:
     return df
 
 
+def add_file_filters(filename: str, new_entry: dict):
+    # Write to filters JSON
+    directory = get_directory(filename)
+    if not directory:
+        raise Exception(f"{filename} has no directory!")
+
+    json_path = os.path.join(directory, "filters.json")
+    data: list[dict] = []
+    if os.path.exists(json_path):
+        with open(json_path, "r") as f:
+            data = json.load(f)  # Load json data.
+
+    data.append(new_entry)
+    with open(json_path, "w") as f:
+        json.dump(data, f, indent=4)  # make json easier to read
+
+
 def send_df(
     df: pd.DataFrame, filename: str, sheet_name: str = "Sheet1", error: str = ""
 ) -> Response:
@@ -267,11 +284,17 @@ def filter_update():
     if not json_data or not keys.issubset(json_data.keys()):
         return jsonify({"error": "Missing one or more required keys"}), 400
 
-    selected_file_name = json_data["filename"]
-    selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
-    # TODO: Add update filter method
+    keys.remove("filename")  # Don't pass filename
 
-    return jsonify({"error": "Method not implemented"}), 500
+    new_entry: dict = {
+        key: json_data[key] for key in keys
+    }  # Extract relevant information
+
+    try:
+        add_file_filters(json_data["filename"], new_entry)
+        return jsonify({"message": "Filter added successfully to file"}), 200
+    except Exception as e:
+        return jsonify({"error": e}), 500
 
 
 @app.route("/resources/<path:path>")
