@@ -200,7 +200,7 @@ function applyFilter(filename, column) {
         .then(response => {
             // Check if it's successful
             if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+                throw new Error(`Failed to add error`);
             }
 
             changeSheet();  // Update sheet with new filter
