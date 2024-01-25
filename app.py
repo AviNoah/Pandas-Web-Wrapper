@@ -76,8 +76,8 @@ def get_file_path(filename) -> str | None:
     return file_path
 
 
-def get_file_filters(filename) -> list[dict]:
-    # Read filters JSON
+def get_file_filters(filename, sheet) -> list[dict]:
+    # Read filters JSON, and return the filters at the selected sheet
     directory = get_directory(filename)
     if not directory:
         return []  # Empty filters data
@@ -90,6 +90,11 @@ def get_file_filters(filename) -> list[dict]:
     try:
         with open(json_path, "r") as file:
             json_data: list[dict] = json.load(file)
+
+        filters: list[dict] = list(
+            filter(lambda filter: filter["sheet"] == sheet, json_data)
+        )
+        return filters
     except json.JSONDecodeError as e:
         raise Exception(f"Failed decoding JSON from {json_path}: {e}")
 
@@ -264,7 +269,7 @@ def filter_get():
     selected_file_name = json_data["filename"]
     selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
 
-    file_filters: list[dict] = get_file_filters(selected_file_name)
+    file_filters: list[dict] = get_file_filters(selected_file_name, selected_sheet)
     return (
         jsonify({"message": "Filters read successfully", "filters": file_filters}),
         200,
