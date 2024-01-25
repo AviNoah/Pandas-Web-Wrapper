@@ -127,7 +127,7 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
     sheets: list[pd.DataFrame] = list(get_file_sheets(filename).values())
     filters: list[dict] = get_file_filters(filename, sheet)
 
-    df = sheets[sheet]
+    df: pd.DataFrame = sheets[sheet]
 
     # each filter contains these keys: column, method, input.
     for filter in filters:
