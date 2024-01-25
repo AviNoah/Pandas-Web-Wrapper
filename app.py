@@ -142,6 +142,11 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
     return df
 
 
+def get_sheet_count(filename) -> int:
+    # return amount of sheets in file
+    return len(get_file_sheets(filename).keys())
+
+
 def add_file_filters(filename: str, new_entry: dict):
     # Write to filters JSON
     directory = get_directory(filename)
@@ -215,12 +220,12 @@ def file_get():
     selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
 
     # Get selected file
-    dfs: list[pd.DataFrame] = list(get_file_sheets(selected_file_name).values())
-    df: pd.DataFrame = dfs[selected_sheet]
+    sheet_count: int = get_sheet_count(selected_file_name)
+    df: pd.DataFrame = get_sheet(selected_file_name, selected_sheet)
 
     response = send_df(df, selected_file_name, error="Selected file not found")
     response.headers.add("File-Name", selected_file_name)
-    response.headers.add("Sheet-Count", str(len(dfs)))
+    response.headers.add("Sheet-Count", str(sheet_count)))
 
     return response
 
