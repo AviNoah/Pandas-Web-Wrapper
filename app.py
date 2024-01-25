@@ -7,6 +7,7 @@ from io import BytesIO
 import os
 import tempfile
 import pandas as pd
+import re
 
 app = Flask(__name__, static_folder="static", template_folder="templates")
 
@@ -138,9 +139,20 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
     for filter in filters:
         # Apply filters
         col, meth, inp = filter["column"], filter["method"], filter["input"]
+        column_name = df.columns[col]
+
         # TODO: Handle dropping columns too as a "hide" method
-        # method can be exact, contains, not contains or regex; must use regex to implement all
-        ...
+
+        # method can be exact, contains, not contains or regex
+        regex_input = inp  # Default to regex
+        if meth == "exact":
+            regex_input = f"^{re.escape(inp)}$"
+        elif meth == "contains":
+            regex_input = re.escape(inp)
+        elif meth == "not contains":
+            regex_input = r"^(?!.*" + re.escape(inp) + r").*$"
+
+        df: pd.DataFrame = df.filter(regex=f"^{column_name}|{regex_input}", axis=1)
 
     return df
 
