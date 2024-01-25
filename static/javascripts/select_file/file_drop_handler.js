@@ -1,3 +1,5 @@
+import { addFiles } from "./populate_folder.js";
+
 // Handle dropping files into folder
 const dropArea = document.getElementById('drop-zone')
 
@@ -56,7 +58,7 @@ function handleDroppedFiles(event) {
         .then(response => {
             if (response.ok) {
                 console.log('Files added successfully');
-                // TODO: Add files to view
+                addFiles(files)  // Send only valid files
             } else {
                 console.error("Server didn't receive files.");
             }
