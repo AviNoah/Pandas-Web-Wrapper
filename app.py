@@ -134,12 +134,12 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
 
     df: pd.DataFrame = sheets[sheet]
 
-    # each filter contains these keys: column, method, input.
+    # each filter contains these keys: column, method, regex escaped input.
     for filter in filters:
         # Apply filters
         col, meth, inp = filter["column"], filter["method"], filter["input"]
         # TODO: Handle dropping columns too as a "hide" method
-        # method can be exact, contains, not contains or regex
+        # method can be exact, contains, not contains or regex; must use regex to implement all
         ...
 
     return df
