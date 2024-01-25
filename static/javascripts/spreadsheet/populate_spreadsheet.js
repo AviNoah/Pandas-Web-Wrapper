@@ -183,7 +183,7 @@ function applyFilter(filename, column) {
     // Get the filter input value
     const patternInput = document.getElementById('filter_input').value;
 
-    console.log(`Pattern input is: ${patternInput} for selection ${selection} on column ${columnIndex}`)
+    console.log(`Pattern input is: ${patternInput} for selection ${selection} on column ${column}`)
 
     const escapedPatternInput = escapeRegExp(patternInput);
 
