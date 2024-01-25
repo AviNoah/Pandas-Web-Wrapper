@@ -135,18 +135,13 @@ function closeFilterPopup(event) {
     if (!filterPopup)
         return;  // Not initialized yet
 
-    if (
-        (event.target.classList.contains('selected') || event.target.parentElement.classList.contains('selected')) &&
-        !filterPopup.contains(event.target)
-    ) {
-        // Filter icon was selected again, don't close popup
-        return;
+    if (event.target === filterPopup || filterPopup.contains(event.target)) {
+        return;  // An element inside filterPopup was selected
     }
 
-    if (event.target !== filterPopup && !filterPopup.contains(event.target)) {
-        filterPopup.style.display = 'none';
-        document.removeEventListener('click', closeFilterPopup);
-    }
+    // An element outside of filterPopup was selected
+    filterPopup.style.display = 'none';
+    document.removeEventListener('click', closeFilterPopup);
 }
 
 function addFilter(event, column) {
