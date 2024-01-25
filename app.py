@@ -76,7 +76,7 @@ def get_file_path(filename) -> str | None:
     return file_path
 
 
-def get_file_filters(filename, sheet) -> list[dict]:
+def get_file_filters(filename, sheet, include_disabled: bool = False) -> list[dict]:
     # Read filters JSON, and return the filters at the selected sheet
     directory = get_directory(filename)
     if not directory:
@@ -92,11 +92,14 @@ def get_file_filters(filename, sheet) -> list[dict]:
             json_data: list[dict] = json.load(file)
 
         # Keep only enabled and ones that apply to the selected sheet
-        filters: list[dict] = list(
-            filter(
-                lambda filter: filter["sheet"] == sheet and filter["enabled"], json_data
-            )
-        )
+        filters: filter = filter(lambda filter: filter["sheet"] == sheet, json_data)
+
+        # Include or exclude disabled filters
+        if not include_disabled:
+            filters: filter = filter(lambda filter: filter["enabled"], filters)
+
+        # Convert to list
+        filters: list[dict] = list(filters)
         return filters
     except json.JSONDecodeError as e:
         raise Exception(f"Failed decoding JSON from {json_path}: {e}")
@@ -104,7 +107,7 @@ def get_file_filters(filename, sheet) -> list[dict]:
 
 def get_file_sheets(filename) -> dict[pd.DataFrame]:
     # Return a dictionary of sheets as pandas data frame of the filename stored in the UPLOAD FOLDER
-    
+
     file_path = get_file_path(filename)
     if not file_path:
         raise Exception(f"{filename} doesn't exist")
@@ -124,7 +127,9 @@ def get_file_sheets(filename) -> dict[pd.DataFrame]:
 
 def get_sheet(filename, sheet) -> pd.DataFrame:
     # Get the sheet with its filters applied
-    sheets: list[pd.DataFrame] = list(get_file_sheets(filename).values())
+    sheets: list[pd.DataFrame] = list(
+        get_file_sheets(filename).values()
+    )  # Only relevant active filters are returned
     filters: list[dict] = get_file_filters(filename, sheet)
 
     df: pd.DataFrame = sheets[sheet]
@@ -134,7 +139,6 @@ def get_sheet(filename, sheet) -> pd.DataFrame:
         # Apply filters
         col, meth, inp = filter["column"], filter["method"], filter["input"]
         # TODO: Handle dropping columns too as a "hide" method
-        # TODO: add an Enable/Disable option, this will filter out all disabled filters
         # method can be exact, contains, not contains or regex
         ...
 
@@ -271,7 +275,7 @@ def file_upload():
 
 @app.route("/filter/get", methods=["POST"])
 def filter_get():
-    # Get the filters of the selected file.
+    # Get the filters of the selected file at the selected sheet.
 
     if request.method != "POST":
         return jsonify({"error": "Unsupported method"}), 500
@@ -285,7 +289,9 @@ def filter_get():
     selected_file_name = json_data["filename"]
     selected_sheet: int = int(json_data["sheet"]) - 1  # Adjust for 0 based index
 
-    file_filters: list[dict] = get_file_filters(selected_file_name, selected_sheet)
+    file_filters: list[dict] = get_file_filters(
+        selected_file_name, selected_sheet, include_disabled=True
+    )
     return (
         jsonify({"message": "Filters read successfully", "filters": file_filters}),
         200,
