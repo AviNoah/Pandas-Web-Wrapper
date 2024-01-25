@@ -1,3 +1,17 @@
 <!-- file_view.html -->
 <link rel="stylesheet" href="{{ url_for('static', filename = 'styles/select_file/file_view_styles.css') }}" />
-<div></div>
+<div class="file-view">
+  <div class="data-wrapper">
+    <img src="{{ url_for('static', filename = 'images/excel_logo_closed.svg') }}" alt="Excel icon closed" />
+    <div class="text-container">
+      <p></p> <!-- File name -->
+      <span></span> <!-- ToolTip -->
+    </div>
+  </div>
+  <div class="buttons-wrapper">
+    <img src="{{ url_for('static', filename = 'images/excel_logo_closed.svg') }}" alt="Excel icon closed" />
+    <img src="{{ url_for('static', filename = 'images/excel_logo_closed.svg') }}" alt="Excel icon closed" />
+    <img src="{{ url_for('static', filename = 'images/excel_logo_closed.svg') }}" alt="Excel icon closed" />
+    <img src="{{ url_for('static', filename = 'images/excel_logo_closed.svg') }}" alt="Excel icon closed" />
+  </div>
+</div>
