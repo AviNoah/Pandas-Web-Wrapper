@@ -1,5 +1,7 @@
 <!-- file_view.html -->
 <link rel="stylesheet" href="{{ url_for('static', filename = 'styles/select_file/file_view_styles.css') }}" />
+<script src="{{ url_for('static', filename = 'javascripts/select_file/file_view_handler.js') }}"></script>
+
 <div class="file-view">
   <div class="data-wrapper">
     <img src="{{ url_for('static', filename = 'images/excel_logo_closed.svg') }}" alt="Excel icon closed" />
@@ -9,9 +11,9 @@
     </div>
   </div>
   <div class="buttons-wrapper">
-    <img class="edit" src="{{ url_for('static', filename = 'images/Edit.svg') }}" alt="Edit" />
-    <img class="query-list" src="{{ url_for('static', filename = 'images/QueryList.svg') }}" alt="Manage filters" />
-    <img class="download" src="{{ url_for('static', filename = 'images/Download.svg') }}" alt="Download file" />
-    <img class="delete" src="{{ url_for('static', filename = 'images/Delete.svg') }}" alt="Delete file" />
+    <img class="edit" onclick="handleEdit()" src="{{ url_for('static', filename = 'images/Edit.svg') }}" alt="Edit" />
+    <img class="query-list" onclick="handleQueryList()" src="{{ url_for('static', filename = 'images/QueryList.svg') }}" alt="Manage filters" />
+    <img class="download" onclick="handleDownload()" src="{{ url_for('static', filename = 'images/Download.svg') }}" alt="Download file" />
+    <img class="delete" onclick="handleDelete()" src="{{ url_for('static', filename = 'images/Delete.svg') }}" alt="Delete file" />
   </div>
 </div>

@@ -1,4 +1,7 @@
-export function addFileView(file) {
-    // Make a file-view
+function handleEdit(event) { }
 
-}
+function handleQueryList(event) { }
+
+function handleDownload(event) { }
+
+function handleDelete(event) { }
