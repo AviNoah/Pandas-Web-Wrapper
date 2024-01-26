@@ -51,6 +51,7 @@ function selectImg(img, shiftKey) {
     else {
         // Deselect all, multi-select ended
         selectedViews.forEach(view => deselectImg(view));
+        // TODO: Open file on spreadsheet, pass filename to spreadsheet view
     }
 
     img.classList.add('selected-file');
