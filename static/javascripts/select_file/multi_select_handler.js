@@ -111,6 +111,19 @@ function showOptions(filenames) {
             optionsBox.classList.add('options-box');
 
             document.body.appendChild(optionsBox)
+            optionsBox.addEventListener("click", closeOptions);
         })
         .catch(error => console.error(error));
+}
+
+function closeOptions(event) {
+    const optionsBox = document.querySelector('options-box');
+    if (!optionsBox)
+        return;  // Not initialized
+
+    if (event.target === optionsBox || optionsBox.contains(event.target))
+        return; // clicked inside, ignore.
+
+    // Clicked outside, close optionsBox.
+    optionsBox.parentElement.removeChild(optionsBox);
 }
