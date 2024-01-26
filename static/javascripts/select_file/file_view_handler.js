@@ -1,5 +1,3 @@
-import { showOptions } from "./multi_select_handler.js";
-
 const maxSelectedViews = 2;  // How many can be selected at once
 let selectedViews = [];
 
