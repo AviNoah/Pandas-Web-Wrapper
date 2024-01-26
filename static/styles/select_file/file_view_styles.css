@@ -38,7 +38,8 @@
     margin-bottom: auto;
 }
 
-.text-container p {
+/* Handle tooltippable text */
+p.tooltippable {
     /* Wrapping */
     height: 55px;
     text-overflow: ellipsis;
@@ -48,6 +49,13 @@
     word-wrap: break-word;
     max-width: 100%;
     text-align: center;
+}
+
+p.tooltippable span {
+    position: absolute;
+    max-width: 100%;
+    word-wrap: break-word;
+    display: none;
 }
 
 .buttons-wrapper {
