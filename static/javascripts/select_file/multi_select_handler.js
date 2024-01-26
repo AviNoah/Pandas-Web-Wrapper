@@ -110,7 +110,7 @@ function showOptions(filenames) {
             optionsBox.innerHTML = content;
             optionsBox.classList.add('options-box');
 
-            document.appendChild(optionsBox)
+            document.body.appendChild(optionsBox)
         })
         .catch(error => console.error(error));
 }
