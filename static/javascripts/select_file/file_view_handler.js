@@ -14,7 +14,7 @@ function handleSelect(event) {
     if (imgElement.classList.contains('selected-file'))
         deselectImg(imgElement);
     else
-        selectImg(imgElement);
+        selectImg(imgElement, event.shiftKey);
 
 
     // Ensure only one event listener is active.
@@ -41,10 +41,17 @@ function handleMultiSelect(event) {
     showOptions(selectedFiles);
 }
 
-function selectImg(img) {
+function selectImg(img, shiftKey) {
     // Make room for the view if over the maximum limit (FIFO style)
-    if (selectedViews.length == maxSelectedViews)
-        deselectImg(selectedViews[0]);
+
+    if (shiftKey) {
+        if (selectedViews.length == maxSelectedViews)
+            deselectImg(selectedViews[0]);
+    }
+    else {
+        // Deselect all, multi-select ended
+        selectedViews.forEach(view => deselectImg(view));
+    }
 
     img.classList.add('selected-file');
     selectedViews.push(img);  // Add to array
