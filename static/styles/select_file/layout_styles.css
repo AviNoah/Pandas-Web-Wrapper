@@ -6,7 +6,7 @@ body {
     overflow: hidden;
 }
 
-#drop-zone::before {
+#drop-zone:not(.populated)::before {
     content: "Drop files here";
     position: absolute;
     top: 50%;
