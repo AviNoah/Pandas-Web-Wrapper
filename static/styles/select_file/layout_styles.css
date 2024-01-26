@@ -19,6 +19,11 @@ body {
     width: 90%;
     height: 90%;
     opacity: 1;
+    border-radius: 10px;
     overflow-y: auto;
     border: 1px dashed black;
+}
+
+#drop-zone.dragover {
+    border-style: solid;
 }
