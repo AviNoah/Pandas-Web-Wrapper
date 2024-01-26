@@ -55,7 +55,11 @@ p.tooltippable span {
     position: absolute;
     max-width: 100%;
     word-wrap: break-word;
-    display: none;
+    visibility: hidden;
+}
+
+p.tooltippable:hover span {
+    visibility: visible;
 }
 
 .buttons-wrapper {
