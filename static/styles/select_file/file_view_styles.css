@@ -8,11 +8,25 @@
     flex-direction: column;
 }
 
+.data-wrapper img {
+    --transition-time: 0.3s;
+    width: 128px;
+    height: 128px;
+    transition: transform var(--transition-time) ease-in-out;
+}
+
+/* Add a hover enlarge effect on non selected files */
+.data-wrapper img:not(.selected-file):hover {
+    --scale: 1.2;
+    transform: scale(var(--scale));
+}
+
 .text-container {
     width: 200px;
     display: flex;
     flex-direction: column;
-    align-items: start;
+    align-items: center;
+    justify-content: center;
     margin-bottom: auto;
 }
 
@@ -20,4 +34,10 @@
     display: flex;
     flex-direction: column;
     margin-bottom: auto;
+}
+
+.buttons-wrapper button {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
