@@ -108,7 +108,7 @@ function showOptions(filenames) {
         .then(content => {
             const optionsBox = document.createElement('div');
             optionsBox.innerHTML = content;
-            optionsBox.classList.add('options-box');
+            optionsBox.classList.add("options-box");
 
             document.body.appendChild(optionsBox)
             document.addEventListener("click", closeOptions);
@@ -117,9 +117,11 @@ function showOptions(filenames) {
 }
 
 function closeOptions(event) {
-    const optionsBox = document.querySelector('options-box');
+    let optionsBox = document.getElementsByClassName("options-box");
     if (!optionsBox)
-        return;  // Not initialized
+        return;  // Non found
+
+    optionsBox = optionsBox[0];
 
     if (event.target === optionsBox || optionsBox.contains(event.target))
         return; // clicked inside, ignore.
