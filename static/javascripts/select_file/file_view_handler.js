@@ -12,11 +12,11 @@ function handleDelete(event) { }
 function handleSelect(event) {
     const imgElement = event.target;
     if (imgElement.classList.contains('selected-file'))
-        selectImg(imgElement);
-    else
         deselectImg(imgElement);
+    else
+        selectImg(imgElement);
 
-
+    console.log('img clicked');
 }
 
 function selectImg(img) {
