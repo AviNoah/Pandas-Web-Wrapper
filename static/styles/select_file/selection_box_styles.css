@@ -1,0 +1,20 @@
+#selection-wrapper {
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+}
+
+.columns-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.columns-container select {
+    width: 50px;
+}
+
+#submit-selection {
+    border: 10px;
+}
