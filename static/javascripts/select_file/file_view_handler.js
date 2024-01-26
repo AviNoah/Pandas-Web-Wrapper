@@ -1,3 +1,5 @@
+import {showOptions}
+
 const maxSelectedViews = 2;  // How many can be selected at once
 let selectedViews = [];
 
@@ -16,7 +18,30 @@ function handleSelect(event) {
     else
         selectImg(imgElement);
 
-    console.log('img clicked');
+
+    // Ensure only one event listener is active.
+    document.removeEventListener("keyup", handleMultiSelect);
+    if (selectedViews.length > 0)
+        document.addEventListener("keyup", handleMultiSelect);
+}
+
+function handleMultiSelect(event) {
+    if (event.shiftKey)
+        return;  // Shift key is still held
+
+    if (selectedViews.length < 2)
+        return;  // multiple were not selected yet.
+
+    // Shift key has been released
+    console.log(`Selected items: ${selectedViews.join(', ')}`);
+
+    // Get file names
+    const selectedFiles = selectedViews.map(view => view.parentElement.querySelector('p').textContent)
+
+    // Deselect all files
+    selectedViews.forEach(view => deselectImg(view));
+
+    showOptions(selectedFiles);
 }
 
 function selectImg(img) {
