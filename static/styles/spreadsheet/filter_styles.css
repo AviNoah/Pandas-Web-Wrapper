@@ -1,6 +1,7 @@
 :root {
-    --normal_button: #7a3cff;
+    --submit_button: #3c60ff;
     --dangerous_button: rgb(233, 71, 71);
+    --filter_background_color: rgb(251, 244, 244);
 }
 
 /* For the pop up box when filter is selected */
@@ -47,7 +48,7 @@
 }
 
 #filter_submit_button {
-    background-color: var(--normal_button);
+    background-color: var(--submit_button);
 }
 
 

@@ -1,14 +1,33 @@
 /* TODO style this */
+:root {
+    --filter_background_color: rgb(251, 244, 244);
+}
 
 #selection-wrapper {
+    /* Layout */
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
+
+    /* Positioning */
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    border: 1px solid black;
+
+    /* Look */
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: var(--filter_background_color);
+}
+
+#selection-wrapper select {
+    padding: 4px;
+    margin: 4px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f8f8f8;
 }
 
 .columns-container {
@@ -23,5 +42,9 @@
 }
 
 #submit-selection {
-    border-radius: 5px;
+    --submit_button: #3c60ff;
+    border-radius: 10px;
+    margin-top: 3px;
+    background-color: var(--submit_button);
+    color: white;
 }
