@@ -25,7 +25,7 @@ function selectImg(img) {
         deselectImg(selectedViews[0]);
 
     img.classList.add('selected-file');
-    selectedViews.add(img);  // Add to array
+    selectedViews.push(img);  // Add to array
 
     fetch("/resources/images/excel_logo_opened.svg")
         .then(response => {
