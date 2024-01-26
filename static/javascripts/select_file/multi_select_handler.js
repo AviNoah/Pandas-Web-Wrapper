@@ -1,4 +1,6 @@
 // Selecting files and multi-select
+const maxSelectedViews = 2;  // How many can be selected at once
+let selectedViews = [];
 
 function handleSelect(event) {
     const imgElement = event.target;
