@@ -1,4 +1,4 @@
-import {showOptions}
+import { showOptions } from "./multi_select_handler.js";
 
 const maxSelectedViews = 2;  // How many can be selected at once
 let selectedViews = [];
@@ -33,7 +33,6 @@ function handleMultiSelect(event) {
         return;  // multiple were not selected yet.
 
     // Shift key has been released
-    console.log(`Selected items: ${selectedViews.join(', ')}`);
 
     // Get file names
     const selectedFiles = selectedViews.map(view => view.parentElement.querySelector('p').textContent)

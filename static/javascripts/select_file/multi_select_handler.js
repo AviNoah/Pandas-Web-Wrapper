@@ -1,1 +1,3 @@
-export function showOptions(filenames) { }
+export function showOptions(filenames) {
+    console.log(`Selected items: ${filenames.join(', ')}`);
+}
