@@ -111,7 +111,7 @@ function showOptions(filenames) {
             optionsBox.classList.add('options-box');
 
             document.body.appendChild(optionsBox)
-            optionsBox.addEventListener("click", closeOptions);
+            document.addEventListener("click", closeOptions);
         })
         .catch(error => console.error(error));
 }
@@ -126,4 +126,5 @@ function closeOptions(event) {
 
     // Clicked outside, close optionsBox.
     optionsBox.parentElement.removeChild(optionsBox);
+    document.removeEventListener("click", closeOptions);
 }
