@@ -91,4 +91,26 @@ function deselectImg(img) {
 
 function showOptions(filenames) {
     console.log(`Selected items: ${filenames.join(', ')}`);
+
+    // Make sure only one exists.
+    const old = document.querySelector('options-box');
+
+    if (old)
+        old.parentElement.removeChild(old);
+
+    fetch("/templates/select_file/selection_box.html")
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Failed to fetch selection box");
+
+            return response.text();
+        })
+        .then(content => {
+            const optionsBox = document.createElement('div');
+            optionsBox.innerHTML = content;
+            optionsBox.classList.add('options-box');
+
+            document.appendChild(optionsBox)
+        })
+        .catch(error => console.error(error));
 }

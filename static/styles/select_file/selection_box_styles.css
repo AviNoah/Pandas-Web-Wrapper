@@ -2,6 +2,11 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 10px solid black;
 }
 
 .columns-container {
@@ -16,5 +21,5 @@
 }
 
 #submit-selection {
-    border: 10px;
+    border-radius: 5px;
 }
