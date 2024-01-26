@@ -121,16 +121,6 @@ function openFile(filePromise, filename, sheetCount) {
     });
 }
 
-// Function to adjust the selected sheet spinner properties
-function adjustSpinner(sheetCount) {
-    // Set the value to 1 and change the maximum value to sheet count
-    selectedSheetSpinner.value = 1;
-    selectedSheetSpinner.max = sheetCount;
-}
-
-function getSelectedSheetIndex() {
-    return selectedSheetSpinner.value - 1;  // Adjust for 0-based indexing
-}
 
 // TODO: Remove test file later
 document.addEventListener('DOMContentLoaded', function (event) {
