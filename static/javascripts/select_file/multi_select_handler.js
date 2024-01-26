@@ -112,6 +112,8 @@ function showOptions(filenames) {
 
             document.body.appendChild(optionsBox)
             document.addEventListener("click", closeOptions);
+
+            // TODO: add event listener for submit, populate selectors for columns
         })
         .catch(error => console.error(error));
 }
