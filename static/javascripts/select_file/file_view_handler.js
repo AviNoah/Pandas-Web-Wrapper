@@ -35,7 +35,10 @@ function selectImg(img) {
             return response.text();
         })
         .then(content => {
-            img.setAttribute("src", content);
+            // Create a data URL from the SVG content
+            const dataUrl = "data:image/svg+xml," + encodeURIComponent(content);
+
+            img.setAttribute("src", dataUrl);
             img.setAttribute("alt", "Excel logo opened")
         }).catch(error => {
             console.error('Error fetching opened Excel logo:', error);
@@ -55,7 +58,10 @@ function deselectImg(img) {
             return response.text();
         })
         .then(content => {
-            img.setAttribute("src", content);
+            // Create a data URL from the SVG content
+            const dataUrl = "data:image/svg+xml," + encodeURIComponent(content);
+
+            img.setAttribute("src", dataUrl);
             img.setAttribute("alt", "Excel logo closed")
         }).catch(error => {
             console.error('Error fetching closed Excel logo:', error);
