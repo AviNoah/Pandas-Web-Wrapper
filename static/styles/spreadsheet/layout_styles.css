@@ -3,7 +3,6 @@
     --trans-opacity-duration: 1s;
 }
 
-html,
 body {
     display: flex;
     flex-direction: column;
@@ -24,7 +23,7 @@ body {
     /* Needs to hover in bottom right corner*/
     bottom: 0;
     right: 0;
-    margin: 10px;
+    margin: 15px;
 }
 
 #sheetSelector:hover {
