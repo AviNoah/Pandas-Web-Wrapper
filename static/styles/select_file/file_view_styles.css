@@ -38,8 +38,8 @@
     margin-bottom: auto;
 }
 
-/* Handle tooltippable text */
-.tooltippable p {
+/* Handle tooltip text */
+.tooltip p {
     /* Wrapping */
     height: 55px;
     text-overflow: ellipsis;
@@ -51,14 +51,14 @@
     text-align: center;
 }
 
-.tooltippable span {
+.tooltip span {
     position: absolute;
     max-width: 100%;
     word-wrap: break-word;
     visibility: hidden;
 }
 
-.tooltippable:hover span {
+.tooltip:hover span {
     visibility: visible;
 }
 
