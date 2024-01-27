@@ -24,6 +24,9 @@ function addFileView(container, file) {
             const paragraphDiv = fileViewDiv.querySelector('p');
             paragraphDiv.textContent = file.name;
 
+            const tooltipDiv = fileViewDiv.querySelector('span');
+            tooltipDiv.textContent = file.name;
+
             container.appendChild(fileViewDiv);
         })
         .catch(error => console.error(error));
