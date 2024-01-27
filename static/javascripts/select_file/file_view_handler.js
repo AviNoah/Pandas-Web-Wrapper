@@ -14,7 +14,7 @@ function handleDelete(event) {
     if (!choice)
         return;  // User cancelled action
 
-    const data = { filename: fileName }
+    const data = JSON.stringify({ filename: fileName });
 
     fetch('/file/delete', {
         method: "POST",
