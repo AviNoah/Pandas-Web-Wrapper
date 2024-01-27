@@ -38,30 +38,6 @@
     margin-bottom: auto;
 }
 
-/* Handle tooltip text */
-.tooltip p {
-    /* Wrapping */
-    height: 55px;
-    text-overflow: ellipsis;
-    overflow: hidden;
-
-    /* Layout */
-    word-wrap: break-word;
-    max-width: 100%;
-    text-align: center;
-}
-
-.tooltip span {
-    position: absolute;
-    max-width: 100%;
-    word-wrap: break-word;
-    visibility: hidden;
-}
-
-.tooltip:hover span {
-    visibility: visible;
-}
-
 .buttons-wrapper {
     display: flex;
     flex-direction: column;
