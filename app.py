@@ -5,6 +5,7 @@ import requests
 from io import BytesIO
 
 import os
+import shutil
 import tempfile
 import pandas as pd
 
@@ -181,6 +182,12 @@ def add_file_filters(filename: str, new_entry: dict):
 def delete_file(filename: str) -> Response:
     # Delete file and return a jsonify response
     directory = get_directory(filename)
+
+    try:
+        shutil.rmtree(directory)
+        return jsonify({"message": "Removed file directory successfully"}), 200
+    except shutil.Error:
+        return jsonify({"error": "Failed to remove file directory"}), 500
 
 
 def send_df(
