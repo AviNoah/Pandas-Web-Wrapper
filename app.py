@@ -252,7 +252,7 @@ def file_get():
 
 @app.route("/file/update", methods=["POST"])
 def file_update():
-    # A Method to update a file's data
+    # A Method to update a file's contents
 
     if request.method != "POST":
         return jsonify("Unsupported method"), 405
@@ -266,8 +266,25 @@ def file_update():
     selected_file_name = json_data["filename"]
     selected_sheet: int = int(json_data["sheet"])
 
-    # TODO: Allow renaming file and updating {excel file's contents} <- check if needing the ability to edit is needed
+    raise NotImplementedError
     return jsonify({"message": "Selected file updated successfully"}), 200
+
+
+@app.route("/file/rename", methods=["POST"])
+def file_rename():
+    # A method to update a file's name
+
+    if request.method != "POST":
+        return jsonify("Unsupported method"), 405
+
+    keys = {"filename", "new_filename"}
+
+    json_data = request.get_json()
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
+    
+    
+    return jsonify({"message": "Selected file renamed successfully"}), 200
 
 
 @app.route("/file/upload", methods=["POST"])
