@@ -10,7 +10,33 @@ function handleDelete(event) {
     const fileViewDiv = getFileView(event.target);
     const fileName = getFileName(event.target);
 
-    
+    const choice = confirm(`Are you sure you want to remove ${fileName}`);
+    if (!choice)
+        return;  // User cancelled action
+
+    const data = { filename: fileName }
+
+    fetch('/file/delete', {
+        method: "POST",
+        headers:
+        {
+            "Content-Type": "application/json",
+        },
+        body: data
+    })
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Failed deleting file");
+
+            return response.json();
+        })
+        .then(json => {
+            console.log(json["message"]);
+            fileViewDiv.parentElement.removeChild(fileViewDiv);  // Remove div
+        })
+        .catch(error => {
+            console.error(error);
+        })
 }
 
 function getFileView(view) {
