@@ -7,9 +7,11 @@ function handleQueryList(event) { }
 function handleDownload(event) { }
 
 function handleDelete(event) {
-    event.target.parentElement
-}
+    const fileViewDiv = getFileView(event.target);
+    const fileName = getFileName(event.target);
 
+    
+}
 
 function getFileView(view) {
     // Return file view from a member of the buttons container

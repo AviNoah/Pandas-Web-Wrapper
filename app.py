@@ -48,7 +48,7 @@ def save_file(file) -> str:
     return file_path
 
 
-def get_directory(filename) -> str | None:
+def get_directory(filename) -> str:
     global ALLOWED_EXTENSIONS
     filename: str = os.path.basename(filename)
     name_part, ext = os.path.splitext(filename)
@@ -56,18 +56,16 @@ def get_directory(filename) -> str | None:
     directory = os.path.join(app.config["UPLOAD_FOLDER"], name_part)
 
     if not os.path.exists(directory):
-        return None  # Doesn't exist
+        raise Exception(f"{filename} has no directory!")
 
     if not ext in ALLOWED_EXTENSIONS:
-        return None  # Invalid extension
+        raise Exception(f"{filename} an has invalid extension!")
 
     return directory
 
 
-def get_file_path(filename) -> str | None:
+def get_file_path(filename) -> str:
     directory = get_directory(filename)
-    if not directory:
-        return None
 
     file_path = os.path.join(directory, os.path.basename(filename))
 
@@ -80,8 +78,6 @@ def get_file_path(filename) -> str | None:
 def get_file_filters(filename, sheet, include_disabled: bool = False) -> list[dict]:
     # Read filters JSON, and return the filters at the selected sheet
     directory = get_directory(filename)
-    if not directory:
-        return []  # Empty filters data
 
     json_path = os.path.join(directory, "filters.json")
 
@@ -170,8 +166,6 @@ def get_sheet_count(filename) -> int:
 def add_file_filters(filename: str, new_entry: dict):
     # Write to filters JSON
     directory = get_directory(filename)
-    if not directory:
-        raise Exception(f"{filename} has no directory!")
 
     json_path = os.path.join(directory, "filters.json")
     data: list[dict] = []
@@ -182,6 +176,11 @@ def add_file_filters(filename: str, new_entry: dict):
     data.append(new_entry)
     with open(json_path, "w") as f:
         json.dump(data, f, indent=4)  # make json easier to read
+
+
+def delete_file(filename: str) -> Response:
+    # Delete file and return a jsonify response
+    directory = get_directory(filename)
 
 
 def send_df(
@@ -282,9 +281,24 @@ def file_rename():
     json_data = request.get_json()
     if not json_data or not keys.issubset(json_data.keys()):
         return jsonify({"error": "Missing one or more required keys"}), 400
-    
-    
+
     return jsonify({"message": "Selected file renamed successfully"}), 200
+
+
+@app.route("/file/delete", methods=["POST"])
+def file_delete():
+    # A method to delete a file name
+
+    if request.method != "POST":
+        return jsonify("Unsupported method"), 405
+
+    keys = {"filename"}
+
+    json_data = request.get_json()
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
+
+    return delete_file(json_data["filename"])
 
 
 @app.route("/file/upload", methods=["POST"])
