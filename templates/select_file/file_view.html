@@ -3,7 +3,10 @@
   <div class="data-wrapper">
     <img onclick="handleSelect(event)" src="{{ url_for('static', filename = 'images/excel_logo_closed.svg') }}" alt="Excel icon closed" />
     <div class="text-container tooltip">
-      <p class="file-name"></p> <!-- File name -->
+      <p class="full-file-name">
+        <span class="file-name"></span>
+        <span class="file-ext"></span>
+      </p> <!-- File name -->
       <span></span> <!-- ToolTip -->
     </div>
   </div>
