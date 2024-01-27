@@ -1,4 +1,4 @@
-import { addFiles } from "./populate_folder.js";
+import { addFiles, getFileExtension } from "./populate_folder.js";
 
 // Handle dropping files into folder
 const dropArea = document.getElementById('drop-zone')
@@ -25,11 +25,6 @@ function handleDrop(e) {
         dropArea.classList.add('populated')  // Mark as already populated - remove hint to drag files
         handleDroppedFiles(e);  // Accept dropped files
     }
-}
-
-function getFileExtension(filename) {
-    const parts = filename.split('.');
-    return parts.length > 1 ? parts[parts.length - 1].toLowerCase() : '';
 }
 
 function isValidFile(filename) {
