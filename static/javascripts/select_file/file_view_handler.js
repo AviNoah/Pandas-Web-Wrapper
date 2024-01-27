@@ -4,10 +4,10 @@ function handleEdit(event) {
 
 function handleQueryList(event) { }
 
-function handleDownload(event) { 
+function handleDownload(event) {
     const fileName = getFileName(event.target);
 
-    fetch('/file/')
+    fetch('/file/get/sheet')
 }
 
 function handleDelete(event) {

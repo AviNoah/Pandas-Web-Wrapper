@@ -256,6 +256,33 @@ def file_get():
     return response
 
 
+@app.route("/file/get/sheet", methods=["POST"])
+def file_get_sheet():
+    # A method to get data of a selected file.
+
+    if request.method != "POST":
+        return jsonify("Unsupported method"), 405
+
+    keys = {"filename", "sheet"}
+
+    json_data = request.get_json()
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
+
+    selected_file_name = json_data["filename"]
+    selected_sheet: int = int(json_data["sheet"])
+
+    # Get selected file
+    sheet_count: int = get_sheet_count(selected_file_name)
+    df: pd.DataFrame = get_sheet(selected_file_name, selected_sheet)
+
+    response = send_df(df, selected_file_name, error="Selected file not found")
+    response.headers.add("File-Name", selected_file_name)
+    response.headers.add("Sheet-Count", str(sheet_count))
+
+    return response
+
+
 @app.route("/file/update", methods=["POST"])
 def file_update():
     # A Method to update a file's contents
@@ -401,7 +428,7 @@ def test_file():
         if not upload_response.ok:
             raise Exception("Saving file failed")
 
-        get_file_url = "http://127.0.0.1:5000" + url_for("file_get")
+        get_file_url = "http://127.0.0.1:5000" + url_for("file_get_sheet")
         data = {"filename": file_name, "sheet": 0}
         fetch_response = requests.post(get_file_url, json=data)
         if not fetch_response.ok:
