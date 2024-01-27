@@ -1,5 +1,5 @@
-.has-tooltip> :not(.tooltip) {
-    /* Styles for children elements that are not tooltips */
+/* Handle tooltip text */
+.tooltip p {
     /* Wrapping */
     height: 55px;
     text-overflow: ellipsis;
@@ -11,9 +11,7 @@
     text-align: center;
 }
 
-
-/* Tooltip style */
-.has-tooltip .tooltip {
+.tooltip span {
     position: absolute;
     visibility: hidden;
     max-width: 80%;
@@ -22,7 +20,7 @@
     color: white;
 }
 
-.has-tooltip:hover .tooltip {
+.tooltip:hover span {
     --background-color: rgb(105, 100, 96);
     visibility: visible;
     background-color: var(--background-color);
