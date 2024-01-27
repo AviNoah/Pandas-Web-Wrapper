@@ -13,11 +13,15 @@
 
 .tooltip span {
     position: absolute;
-    max-width: 100%;
-    word-wrap: break-word;
     visibility: hidden;
+    max-width: 80%;
+    word-wrap: break-word;
+    padding: 3px;
+    color: white;
 }
 
 .tooltip:hover span {
+    --background-color: rgb(105, 100, 96);
     visibility: visible;
+    background-color: var(--background-color);
 }
