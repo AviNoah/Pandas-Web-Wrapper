@@ -39,7 +39,7 @@
 }
 
 /* Handle tooltippable text */
-p.tooltippable {
+.tooltippable p {
     /* Wrapping */
     height: 55px;
     text-overflow: ellipsis;
@@ -51,14 +51,14 @@ p.tooltippable {
     text-align: center;
 }
 
-p.tooltippable span {
+.tooltippable span {
     position: absolute;
     max-width: 100%;
     word-wrap: break-word;
     visibility: hidden;
 }
 
-p.tooltippable:hover span {
+.tooltippable:hover span {
     visibility: visible;
 }
 
