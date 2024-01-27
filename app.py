@@ -236,22 +236,25 @@ def file_get():
     if request.method != "POST":
         return jsonify("Unsupported method"), 405
 
-    keys = {"filename", "sheet"}
+    keys = {"filename"}
 
     json_data = request.get_json()
     if not json_data or not keys.issubset(json_data.keys()):
         return jsonify({"error": "Missing one or more required keys"}), 400
 
     selected_file_name = json_data["filename"]
-    selected_sheet: int = int(json_data["sheet"])
+
+    file_path = get_file_path(selected_file_name)
 
     # Get selected file
-    sheet_count: int = get_sheet_count(selected_file_name)
-    df: pd.DataFrame = get_sheet(selected_file_name, selected_sheet)
 
-    response = send_df(df, selected_file_name, error="Selected file not found")
+    response = send_file(
+        file_path,
+        as_attachment=True,
+        download_name=selected_file_name,
+        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
     response.headers.add("File-Name", selected_file_name)
-    response.headers.add("Sheet-Count", str(sheet_count))
 
     return response
 
