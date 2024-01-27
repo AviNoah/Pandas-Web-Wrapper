@@ -1,5 +1,5 @@
 function handleEdit(event) {
-
+    // TODO: Edit will allow you to open the file's spreadsheet in edit mode
 }
 
 function handleQueryList(event) { }
