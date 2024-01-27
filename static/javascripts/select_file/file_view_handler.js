@@ -6,8 +6,20 @@ function handleQueryList(event) { }
 
 function handleDownload(event) {
     const fileName = getFileName(event.target);
+    const data = JSON.stringify({ filename: fileName });
 
-    fetch('/file/get/sheet')
+    fetch('/file/get', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: data
+    })
+        .then(request => {
+            if (!request.ok)
+                throw new Error("Failed to fetch file");
+        })
+        .catch(error => console.error(error));
 }
 
 function handleDelete(event) {

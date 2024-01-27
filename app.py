@@ -248,15 +248,13 @@ def file_get():
 
     # Get selected file
 
-    response = send_file(
+    # TODO fix this
+    return send_file(
         file_path,
         as_attachment=True,
         download_name=selected_file_name,
         mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     )
-    response.headers.add("File-Name", selected_file_name)
-
-    return response
 
 
 @app.route("/file/get/sheet", methods=["POST"])
