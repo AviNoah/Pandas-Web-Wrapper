@@ -231,7 +231,7 @@ def show_spreadsheet():
 
 @app.route("/file/get", methods=["POST"])
 def file_get():
-    # A method to get data of or update a selected file.
+    # A method to get data of a selected file.
 
     if request.method != "POST":
         return jsonify("Unsupported method"), 405

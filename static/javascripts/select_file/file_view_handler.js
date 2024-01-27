@@ -4,7 +4,11 @@ function handleEdit(event) {
 
 function handleQueryList(event) { }
 
-function handleDownload(event) { }
+function handleDownload(event) { 
+    const fileName = getFileName(event.target);
+
+    fetch('/file/')
+}
 
 function handleDelete(event) {
     const fileViewDiv = getFileView(event.target);
