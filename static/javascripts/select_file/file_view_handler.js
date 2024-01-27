@@ -1,5 +1,9 @@
 function handleEdit(event) {
+    const filename = getFilename(event.target);
 
+    fetch("/file/rename", {
+
+    })
 }
 
 function handleQueryList(event) { }
