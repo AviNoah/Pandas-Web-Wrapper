@@ -1,8 +1,30 @@
 function handleEdit(event) {
     // TODO: Edit will allow you to open the file's spreadsheet in edit mode
+    // TODO: Pop up a rename window to rename the file
 }
 
-function handleQueryList(event) { }
+function handleQueryList(event) {
+    const fileViewDiv = getFileView(event);
+    const fileName = getFileName(event);
+
+    const data = JSON.stringify({ filename: fileName });
+    fetch("filter/get", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: data
+    })
+        .then(response => {
+            if (!response.ok)
+                throw new Error('Failed to retrieve filters');
+
+            return response.json();
+        })
+        .then(json => {
+            // Populate filters div using json data.
+        })
+}
 
 function handleDownload(event) {
     const fileName = getFileName(event.target);
@@ -81,4 +103,8 @@ function getFileName(view) {
     const filename = filenameDiv.textContent;
 
     return filename
+}
+
+function populateFilters(filters) {
+    // From the filters json return a div wrapper of the filters.
 }
