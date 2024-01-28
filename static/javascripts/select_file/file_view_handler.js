@@ -93,7 +93,7 @@ function handleDelete(event) {
 
 function getFileView(view) {
     // Return file view from a member of the buttons container
-    const fileViewDiv = view.parentElement.parentElement
+    const fileViewDiv = view.closest("file-view");
     return fileViewDiv
 }
 
@@ -102,7 +102,7 @@ function getFileName(view) {
     const filenameDiv = getFileView(view).querySelector('p.file-name');
     const filename = filenameDiv.textContent;
 
-    return filename
+    return filename;
 }
 
 function populateFilters(filters) {
