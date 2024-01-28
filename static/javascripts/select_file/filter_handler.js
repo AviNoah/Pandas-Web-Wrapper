@@ -1,7 +1,7 @@
 function handleFilterSubmit(event) {
-    const filterItemDiv = event.closest('')
+    // Think of a way to store data along side html tags in client
 }
 
 function handleFilterDelete(event) {
-    
+
 }
