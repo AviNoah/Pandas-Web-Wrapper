@@ -8,6 +8,8 @@ function handleDownload(event) {
     const fileName = getFileName(event.target);
     const data = JSON.stringify({ filename: fileName });
 
+    console.log(`${fileName} is being downloaded`);
+
     fetch('/file/get', {
         method: "POST",
         headers: {
@@ -18,6 +20,18 @@ function handleDownload(event) {
         .then(request => {
             if (!request.ok)
                 throw new Error("Failed to fetch file");
+
+            return request.blob();
+        })
+        .then(blob => {
+            // Handle the Blob data, for example, create a URL for downloading
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileName;
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
         })
         .catch(error => console.error(error));
 }

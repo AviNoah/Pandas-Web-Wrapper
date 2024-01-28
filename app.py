@@ -244,17 +244,20 @@ def file_get():
 
     selected_file_name = json_data["filename"]
 
-    file_path = get_file_path(selected_file_name)
+    try:
+        file_path = get_file_path(selected_file_name)
+    except Exception:
+        return jsonify({"error": "File not found"}), 404
 
-    # Get selected file
-
-    # TODO fix this
-    return send_file(
-        file_path,
-        as_attachment=True,
-        download_name=selected_file_name,
-        mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    )
+    try:
+        return send_file(
+            file_path,
+            as_attachment=True,
+            download_name=selected_file_name,
+            mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        )
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 
 @app.route("/file/get/sheet", methods=["POST"])
