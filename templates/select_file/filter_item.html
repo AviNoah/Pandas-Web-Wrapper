@@ -1,10 +1,8 @@
 <link rel="stylesheet" href="{{ url_for('static', filename = 'styles/select_file/filter_item_styles.css') }}" />
-<div class="filter-item">
-  <select name="Column" class="select-column"></select>
-  <select name="Method" class="select-method"></select>
-  <input type="text" class="input-input" required />
-  <div class="buttons">
-    <button name="update" onclick="handleFilterSubmit(event)">Update</button>
-    <button name="delete">Delete</button>
-  </div>
+<select name="Column" class="select-column"></select>
+<select name="Method" class="select-method"></select>
+<input type="text" class="input-input" required />
+<div class="buttons">
+  <button name="update" onclick="handleFilterSubmit(event)">Update</button>
+  <button name="delete">Delete</button>
 </div>
