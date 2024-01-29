@@ -95,8 +95,8 @@ function getFileView(view) {
     // Return file view from a member of the buttons container
     // TODO: maybe find a better way to fetch parent?
     // file-view>ButtonsContainer>Buttons
-    const fileViewDiv = view.parentElement.parentElement.parentElement
-    return fileViewDiv
+    const fileViewDiv = view.parentElement.parentElement.parentElement;
+    return fileViewDiv;
 }
 
 function getFileName(view) {
