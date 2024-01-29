@@ -110,6 +110,7 @@ function showOptions(filenames) {
         .then(content => {
             const optionsBox = document.createElement('div');
             optionsBox.innerHTML = content;
+            optionsBox.classList.add("options-box");
 
             document.body.appendChild(optionsBox)
             document.addEventListener("click", closeOptions);
