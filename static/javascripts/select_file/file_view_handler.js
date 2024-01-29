@@ -23,6 +23,10 @@ function handleQueryList(event) {
         })
         .then(json => {
             // Populate filters div using json data.
+            const filtersContainerDiv = populateFilters(json);
+
+            // position at fileViewDiv, set as child and in styles make absolute position.
+            fileViewDiv.appendChild(filtersContainerDiv);
         })
 }
 
@@ -109,4 +113,6 @@ function getFileName(view) {
 
 function populateFilters(filters) {
     // From the filters json return a div wrapper of the filters.
+    const filtersContainerDiv = document.createElement('div');
+    filtersContainerDiv.classList.add('filters-container');
 }

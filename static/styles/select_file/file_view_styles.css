@@ -50,3 +50,9 @@
     margin: 5px 0;
     cursor: pointer;
 }
+
+.filters-container {
+    position: absolute;
+    width: 100%;
+    height: 300px;
+}
