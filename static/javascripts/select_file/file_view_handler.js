@@ -100,7 +100,7 @@ function getFileView(view) {
 function getFileName(view) {
     // View must be a member of buttons container
     const filenameDiv = getFileView(view).querySelector('p.file-name');
-    const filename = filenameDiv.textContent;
+    const filename = filenameDiv.dataset.filename;
 
     return filename
 }
