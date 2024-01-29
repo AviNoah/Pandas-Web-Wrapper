@@ -29,6 +29,7 @@ function addFileView(container, file) {
 
             // Append filename data to element
             fileViewDiv.setAttribute('data-filename', file.name);
+            fileViewDiv.classList.add('file-view');
 
             container.appendChild(fileViewDiv);
         })

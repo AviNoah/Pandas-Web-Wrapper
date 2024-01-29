@@ -94,13 +94,14 @@ function handleDelete(event) {
 function getFileView(view) {
     // Return file view from a member of the buttons container
     // TODO: maybe find a better way to fetch parent?
-    const fileViewDiv = view.parentElement.parentElement
+    // file-view>ButtonsContainer>Buttons
+    const fileViewDiv = view.parentElement.parentElement.parentElement
     return fileViewDiv
 }
 
 function getFileName(view) {
     // View must be a member of buttons container
-    const filenameDiv = getFileView(view).querySelector('p.file-name');
+    const filenameDiv = getFileView(view);
     const filename = filenameDiv.dataset.filename;
 
     return filename;
