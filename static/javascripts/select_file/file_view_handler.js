@@ -23,7 +23,7 @@ function handleQueryList(event) {
         })
         .then(json => {
             // Populate filters div using json data.
-            const filtersContainerDiv = populateFilters(json);
+            const filtersContainerDiv = populateFilters(JSON.parse(json), fileName);
 
             // position at fileViewDiv, set as child and in styles make absolute position.
             fileViewDiv.appendChild(filtersContainerDiv);
@@ -111,8 +111,44 @@ function getFileName(view) {
     return filename;
 }
 
-function populateFilters(filters) {
-    // From the filters json return a div wrapper of the filters.
+function populateFilters(filters, fileName) {
+    // From the filters list return a div wrapper of the filters.
     const filtersContainerDiv = document.createElement('div');
     filtersContainerDiv.classList.add('filters-container');
+
+    fetch('templates/select_file/filter_item.html')
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Failed to retrieve filter item template");
+
+            return response.text();
+        })
+        .then(content => {
+            filters.forEach(filter => {
+                const filterItem = document.createElement('div');
+                filterItem.classList.add('filter-item');
+                filterItem.innerHTML = content;
+
+                const tableColumns = getTableColumns();
+
+                // Populate column selector
+                const columnSelect = filterItem.querySelector('select[name="column"]');
+                tableColumns.forEach(item => {
+                    const optionElement = document.createElement('option');
+                    optionElement.value = item;
+                    optionElement.textContent = item;
+                    columnSelect.appendChild(optionElement);
+                })
+                columnSelect.value = filter.column;
+
+                const methodSelect = filterItem.querySelector('select[name="method"]');
+                methodSelect.value = filter.method;
+
+                const inputField = filterItem.querySelector('input[name="input"]');
+                inputField.textContent = filter.input;
+
+                filtersContainerDiv.appendChild(filterItem);
+            })
+        })
+        .catch(error => console.error(error));
 }

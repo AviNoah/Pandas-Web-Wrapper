@@ -5,3 +5,7 @@ function handleFilterSubmit(event) {
 function handleFilterDelete(event) {
 
 }
+
+function getFilterFileName(view){
+    event
+}
