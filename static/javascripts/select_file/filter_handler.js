@@ -11,7 +11,7 @@ function handleFilterDelete(event) {
 
     const filterID = filterItem.dataset.id;
 
-    const data = JSON.stringify({ filename: fileName }, { filter: filterID });
+    const data = JSON.stringify({ filename: fileName }, { filterID: filterID });
 
     fetch('/filter/delete', {
         method: "POST",

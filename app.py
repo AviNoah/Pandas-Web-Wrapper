@@ -409,6 +409,21 @@ def filter_update():
         return jsonify({"error": e}), 500
 
 
+@app.route("/filter/delete", methods=["POST"])
+def filter_delete():
+    # Delete a filter from the selected file
+    if request.method != "POST":
+        return jsonify({"error": "Unsupported method"}), 500
+
+    keys = {"filename", "filterID"}
+
+    json_data = request.get_json()
+    if not json_data or not keys.issubset(json_data.keys()):
+        return jsonify({"error": "Missing one or more required keys"}), 400
+
+    # TODO: Implement deleting the filter matching the filterID
+
+
 @app.route("/resources/<path:path>")
 def get_resource(path):
     # Serve static files from back-end
