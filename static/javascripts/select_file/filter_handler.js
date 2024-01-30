@@ -6,6 +6,16 @@ function handleFilterDelete(event) {
 
 }
 
-function getFilterFileName(view){
-    event
+function getFilterItem(buttonView) {
+    // must be a button in buttons container
+    return view.parentElement.parentElement;
+}
+
+function getFilterContainer(buttonView) {
+    return getFilterItem(view).parentElement;
+}
+
+function getFilterFileName(buttonView) {
+    const filterContainer = getFilterContainer(buttonView);
+    return filterContainer.dataset.filename;
 }
