@@ -361,7 +361,7 @@ def file_upload():
 
 @app.route("/filter/get", methods=["POST"])
 def filter_get():
-    # Get the filters of the selected file at the selected sheet.
+    # Get all the filters of the selected file at the selected sheet.
 
     if request.method != "POST":
         return jsonify({"error": "Unsupported method"}), 500
